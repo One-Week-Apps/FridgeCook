@@ -9,7 +9,7 @@
 A sample Flutter app demonstrating the usage of Clean Architecture and Test Driven Development for building iOS & Android applications using Image Recognition and ChatGPT ! - https://one-week-apps.com/fridge-cook/
 
 # The App
-Fridge Cook is a ingredients management application tailored to suggest recipes based on your fridge's content!  
+Fridge Cook is an ingredients management application tailored to suggest recipes based on your fridge's content!  
  
 • Add your ingredients by simply scanning them (image based)
 
