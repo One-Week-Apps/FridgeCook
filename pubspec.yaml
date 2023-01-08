@@ -33,7 +33,11 @@ dependencies:
   flutter_launcher_icons:  ^0.9.0
   intl: ^0.16.1
 
+  lottie: ^2.1.0
+
   google_fonts: ^2.1.0
+
+  shared_preferences: ^2.0.15
 
   html: ^0.14.0+3
   http: ^0.13.0
@@ -71,12 +75,10 @@ flutter:
     - assets/images/cup.png
     - assets/images/trophy.png
     - assets/images/stats.png
-    - assets/images/onboarding_move.png
-    - assets/images/onboarding_done.png
-    - assets/images/onboarding_rating.png
-    - assets/images/onboarding_move_details.png
-    - assets/images/onboarding_achievements.png
-    - assets/images/locked.png
+    - assets/images/onboarding_scan.png
+    - assets/images/onboarding_listing.png
+    - assets/images/onboarding_recipes_listing.png
+    - assets/images/onboarding_recipe_details.png
     - assets/images/unlocked.png
     - assets/images/placeholder_1.png
     - assets/images/placeholder_2.png

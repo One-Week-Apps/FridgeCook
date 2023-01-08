@@ -7,7 +7,7 @@ class SharedPreferencesKeys {
   static const lastDateTimeAppOpened = _prefix + 'lastDateTimeAppOpened';
   static const performanceCount = _prefix + 'performanceCount';
   static const performance = _prefix + 'performance_';
-  static const likedMove = _prefix + 'likedMove_';
+  static const likedProduct = _prefix + 'likedProduct_';
 
   // storage format: { prefs_achievementCurrentStep_14: 3 }
   static const achievementCurrentStep = _prefix + 'achievementCurrentStep_';

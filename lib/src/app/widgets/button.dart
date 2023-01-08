@@ -1,4 +1,4 @@
-import '../pages/moves_listing/moves_listing_controller.dart';
+import '../pages/products_listing/products_listing_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -9,10 +9,10 @@ class HomePageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // use a common controller assuming HomePageButton is always a child of Home
-    MovesListingController controller =
-        FlutterCleanArchitecture.getController<MovesListingController>(context);
+    ProductsListingController controller =
+        FlutterCleanArchitecture.getController<ProductsListingController>(context);
     return GestureDetector(
-      onTap: controller.flushMovesButtonPressed,
+      onTap: controller.flushProductsButtonPressed,
       child: Container(
         height: 50.0,
         alignment: FractionalOffset.center,

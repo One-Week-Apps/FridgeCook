@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:fridge_cook/src/app/SharedPreferencesKeys.dart';
-import 'package:fridge_cook/src/app/pages/achievements/achievements_controller.dart';
-import 'package:fridge_cook/src/app/pages/moves_details/moves_details_view.dart';
-import 'package:fridge_cook/src/app/pages/moves_listing/moves_listing_view.dart';
+import 'package:fridge_cook/src/app/pages/recipes_details/recipes_details_view.dart';
+import 'package:fridge_cook/src/app/pages/products_listing/products_listing_view.dart';
 import 'package:fridge_cook/src/app/pages/onboarding/onboarding_view.dart';
 import 'package:fridge_cook/src/app/pages/stats/stats_view.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_performance_repository.dart';
@@ -69,15 +68,8 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-
-    AchievementsObserver achievementsObserver = AchievementsController();
-    CommonDeps().achievementsObserver = achievementsObserver;
-
-    if (isFirstOpeningOfTheDay) {
-        achievementsObserver.update(AchievementTypes.consecutiveDaysAppOpening);
-    }
     
-    var homeRoute = tutorialCompleted ? MovesListingRoute(achievementsObserver) : OnboardingRoute();
+    var homeRoute = tutorialCompleted ? ProductsListingRoute(achievementsObserver) : OnboardingRoute();
 
     return OKToast(
           child: MaterialApp(
@@ -88,16 +80,11 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Montserrat'),
         home: homeRoute,
         routes: {
-          MovesListingRoute.routeName: (context) => MovesListingRoute(achievementsObserver),
-          MovesDetailsRoute.routeName: (context) { 
-            final Move move = ModalRoute.of(context).settings.arguments; 
-            return MovesDetailsRoute(achievementsObserver, move); 
-          },
-          StatsRoute.routeName: (context) {
-            if (isFirstOpeningOfTheDay) {
-              achievementsObserver.update(AchievementTypes.analyst);
-            }
-            return StatsRoute(achievementsObserver);
+          ProductsListingRoute.routeName: (context) => ProductsListingRoute(),
+          RecipesListingRoute.routeName:(context) => RecipesListingRoute(),
+          RecipesDetailsRoute.routeName: (context) { 
+            final Product product = ModalRoute.of(context).settings.arguments; 
+            return RecipesDetailsRoute(product); 
           },
         },
         debugShowCheckedModeBanner: false,

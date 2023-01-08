@@ -11,11 +11,10 @@ class CustomImages {
   static const trophy = _imagesPrefix + "trophy.png";
   static const stats = _imagesPrefix + "stats.png";
 
-  static const onboardingMoves = _imagesPrefix + "onboarding_move.png";
-  static const onboardingDone = _imagesPrefix + "onboarding_done.png";
-  static const onboardingRating = _imagesPrefix + "onboarding_rating.png";
-  static const onboardingMoveDetails = _imagesPrefix + "onboarding_move_details.png";
-  static const onboardingAchievements = _imagesPrefix + "onboarding_achievements.png";
+  static const onboardingScan = _imagesPrefix + "onboarding_scan.png";
+  static const onboardingListing = _imagesPrefix + "onboarding_listing.png";
+  static const onboardingRecipesListing = _imagesPrefix + "onboarding_recipes_listing.png";
+  static const onboardingRecipeDetails = _imagesPrefix + "onboarding_recipe_details.png";
 
   static const locked = _imagesPrefix + "locked.png";
   static const unlocked = _imagesPrefix + "unlocked.png";
