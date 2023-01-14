@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:math';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:fridge_cook/src/data/repositories/data_recipes_repository.dart';
+import 'package:fridge_cook/src/domain/entities/recipe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fridge_cook/src/app/CustomImages.dart';
 import 'package:fridge_cook/src/app/pages/recipes_details/recipes_details_view.dart';
@@ -10,40 +12,40 @@ import 'package:fridge_cook/src/data/repositories/data_products_repository.dart'
 import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'recipes_listing_controller.dart';
 
-class ProductsListingRoute extends View {
-  static const routeName = '/productsListing';
-  ProductsListingRoute({Key key, this.title}) : super(key: key);
+class RecipesListingRoute extends View {
+  static const routeName = '/recipesListing';
+  RecipesListingRoute({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _ProductsListingRouteState createState() => _ProductsListingRouteState();
+  _RecipesListingRouteState createState() => _RecipesListingRouteState();
 }
 
-class _ProductsListingRouteState extends ViewState<ProductsListingRoute, ProductsListingController>
+class _RecipesListingRouteState extends ViewState<RecipesListingRoute, RecipesListingController>
     with SingleTickerProviderStateMixin {
-    _ProductsListingRouteState()
-      : super(ProductsListingController(DataProductsRepository()));
+    _RecipesListingRouteState()
+      : super(RecipesListingController(DataRecipesRepository()));
 
-  Widget _refreshProductsButton() {
-    var controller = FlutterCleanArchitecture.getController<ProductsListingController>(context);
+  Widget _refreshRecipesButton() {
+    var controller = FlutterCleanArchitecture.getController<RecipesListingController>(context);
     return FloatingActionButton(
-      heroTag: "refreshProductsButton",
+      heroTag: "refreshRecipesButton",
       backgroundColor: Colors.black,
       onPressed: () {
-        controller.flushProductsButtonPressed();
+        
       },
-      tooltip: 'Flush Salsa Products',
+      tooltip: 'Flush Salsa Recipes',
       child: Icon(Icons.refresh),
     );
   }
 
-  Widget _productTableViewCell(int index, Product item) {
-    var controller = FlutterCleanArchitecture.getController<ProductsListingController>(context);
-    var move = controller.products[index];
-    print("move[${index.toString()}] = $move");
+  Widget _productTableViewCell(int index, Recipe item) {
+    var controller = FlutterCleanArchitecture.getController<RecipesListingController>(context);
+    var recipe = controller.recipes[index];
+    print("recipe[${index.toString()}] = $recipe");
     var thumbnailWidth = MediaQuery.of(context).size.width - 100;
-    var thumbnail = Image.network(move.thumbnailUrlString, width: thumbnailWidth, height: thumbnailWidth * 360 / 480);
+    var thumbnail = recipe.image;//Image.network(, width: thumbnailWidth, height: thumbnailWidth * 360 / 480);
 
     return InkWell(
                 child: Container(
@@ -55,7 +57,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                       thumbnail,
                       Row(
                         children: <Widget>[
-                          Text('\n' + move.name,
+                          Text('\n' + recipe.name,
                               style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w900)),
@@ -63,7 +65,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                             flex: 1,
                           ),
                           Image.asset(
-                  move.isLiked ? CustomImages.like : CustomImages.dislike,
+                  CustomImages.like,
                   width: 20,
                   height: 20,
                 )
@@ -72,14 +74,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                       Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Difficulty: ${move.difficulty} over 5",
+                            "Difficulty: ${1} over 5",
                             textAlign: TextAlign.left,
                           )),
                       Text(" "),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          move.description.substring(0, min(200, move.description.length - 1)) + "...\n"))
                     ],
                   ),
                 ),
@@ -87,23 +85,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                   Navigator.pushNamed(
                     context, 
                     RecipesDetailsRoute.routeName,
-                    arguments: move
+                    arguments: recipe
                   );
                 },
               );
-  }
-
-  Widget _ratePerformanceButton() {
-    var controller = FlutterCleanArchitecture.getController<ProductsListingController>(context);
-    return FloatingActionButton(
-      heroTag: "ratePerformanceButton",
-      backgroundColor: Colors.black,
-      onPressed: () {
-        controller.ratePerformanceButtonPressed(context);
-      },
-      tooltip: 'Flush Salsa Products',
-      child: Icon(Icons.done),
-    );
   }
 
   var _doOnce = true;
@@ -111,21 +96,21 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   Widget get view => buildPage();
 
   Widget buildPage() {
-    var controller = FlutterCleanArchitecture.getController<ProductsListingController>(context);
+    var controller = FlutterCleanArchitecture.getController<RecipesListingController>(context);
 
     if (_doOnce) {
       _doOnce = false;
-      controller.getAllProducts();
+      controller.getAllRecipes();
     }
 
     var children = <Widget>[
-      for (var i = 0 ; i < controller.products.length ; i++) _productTableViewCell(i, controller.products[i])
+      for (var i = 0 ; i < controller.recipes.length ; i++) _productTableViewCell(i, controller.recipes[i])
     ];
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: Container(width: 200, padding: EdgeInsets.only(top: 100),
-        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[_refreshProductsButton(), SizedBox(width: 5), _ratePerformanceButton()]),
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[_refreshRecipesButton(), SizedBox(width: 5),]),
       ),
       appBar: AppBar(
         title: Text(
@@ -133,15 +118,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           style: GoogleFonts.salsa(fontSize: 30),
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Image.asset(CustomImages.trophy),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AchievementsRoute()),
-              );
-            },
-          )
         ],
         bottom: TabBar(
           tabs: [
@@ -169,7 +145,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                     .add(EdgeInsets.only(top: 100))
                     .add(EdgeInsets.only(bottom: 50)),
                 children: children,
-      )*/,),
+      )*/),
     );
   }
 

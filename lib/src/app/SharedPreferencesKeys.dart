@@ -2,6 +2,9 @@
 class SharedPreferencesKeys {
   SharedPreferencesKeys._();
 
+  static const product = 'product';
+  static const productCount = 'productCount';
+
   static const _prefix = 'prefs_';
   static const tutorialCompleted = _prefix + 'tutorialCompleted';
   static const lastDateTimeAppOpened = _prefix + 'lastDateTimeAppOpened';

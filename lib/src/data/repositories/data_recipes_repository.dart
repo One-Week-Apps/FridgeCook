@@ -12,7 +12,8 @@ class DataRecipesRepository extends RecipesRepository {
     recipes.addAll([
       Recipe(
         "Orange Cake",
-        "Some orange cake",
+        ["ingredients"],
+        ["directions"],
         Image.network("https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg"),
         [
           Product(

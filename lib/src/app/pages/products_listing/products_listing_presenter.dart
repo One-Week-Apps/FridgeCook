@@ -1,7 +1,4 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:fridge_cook/src/data/repositories/in_memory_performance_repository.dart';
-import 'package:fridge_cook/src/data/repositories/random_products_generator.dart';
-import 'package:fridge_cook/src/domain/entities/performance.dart';
 import 'package:fridge_cook/src/domain/usecases/get_all_products_usecase.dart';
 
 class ProductsListingPresenter extends Presenter {

@@ -29,16 +29,16 @@ import 'package:http/http.dart';
 ///     }
 ///   }
 class CompletionsResponse {
-  final String? id;
+  final String id;
   final String object;
-  final int? created;
-  final String? model;
-  final List<dynamic>? choices; // This list contains the completions
-  final Map<String, dynamic>? usage;
-  final int? promptTokens;
-  final int? completionTokens;
-  final int? totalTokens;
-  final String? firstCompletion;
+  final int created;
+  final String model;
+  final List<dynamic> choices; // This list contains the completions
+  final Map<String, dynamic> usage;
+  final int promptTokens;
+  final int completionTokens;
+  final int totalTokens;
+  final String firstCompletion;
 
   const CompletionsResponse({
     /*required */this.id,

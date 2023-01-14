@@ -16,7 +16,7 @@ class OpenAIModel {
   final OpenAIModels model;
   final String identifier;
 
-  OpenAIModel({required this.model, required this.identifier});
+  OpenAIModel({this.model, this.identifier});
 
   /// Returns a [OpenAIModel] for the given model choice
   factory OpenAIModel.model(OpenAIModels model) {
@@ -27,6 +27,6 @@ class OpenAIModel {
       OpenAIModels.textAda001: 'text-ada-001',
     };
 
-    return OpenAIModel(model: model, identifier: modelIdentifiers[model]!);
+    return OpenAIModel(model: model, identifier: modelIdentifiers[model]);
   }
 }

@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/app/SharedPreferencesKeys.dart';
+import 'package:fridge_cook/src/app/pages/recipes_listing/recipes_listing_view.dart';
+import 'package:fridge_cook/src/data/repositories/SharedPref.dart';
+import 'package:fridge_cook/src/domain/entities/recipe.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:fridge_cook/src/app/pages/recipes_details/recipes_details_view.dart';
 import 'package:fridge_cook/src/app/pages/products_listing/products_listing_view.dart';
 import 'package:fridge_cook/src/app/pages/onboarding/onboarding_view.dart';
-import 'package:fridge_cook/src/app/pages/stats/stats_view.dart';
-import 'package:fridge_cook/src/data/repositories/in_memory_performance_repository.dart';
-import 'package:fridge_cook/src/domain/entities/achievement_types.dart';
-import 'package:fridge_cook/src/domain/entities/move.dart';
-import 'package:fridge_cook/src/domain/usecases/achievements_observer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CommonDeps {
   static final CommonDeps _singleton = CommonDeps._internal();
-
-  AchievementsObserver achievementsObserver;
 
   factory CommonDeps() {
     return _singleton;
@@ -69,7 +66,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     
-    var homeRoute = tutorialCompleted ? ProductsListingRoute(achievementsObserver) : OnboardingRoute();
+    var homeRoute = tutorialCompleted ? ProductsListingRoute() : OnboardingRoute();
 
     return OKToast(
           child: MaterialApp(
@@ -83,8 +80,8 @@ class MyApp extends StatelessWidget {
           ProductsListingRoute.routeName: (context) => ProductsListingRoute(),
           RecipesListingRoute.routeName:(context) => RecipesListingRoute(),
           RecipesDetailsRoute.routeName: (context) { 
-            final Product product = ModalRoute.of(context).settings.arguments; 
-            return RecipesDetailsRoute(product); 
+            final Recipe recipe = ModalRoute.of(context).settings.arguments; 
+            return RecipesDetailsRoute(recipe); 
           },
         },
         debugShowCheckedModeBanner: false,

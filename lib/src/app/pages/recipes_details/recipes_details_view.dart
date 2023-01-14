@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fridge_cook/src/app/CustomImages.dart';
 import 'package:fridge_cook/src/domain/entities/recipe.dart';
@@ -47,13 +46,13 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
                   child: Column(children: <Widget>[
                     Row(
                       children: <Widget>[
-                            Spacer(flex: 1,)
+                            Spacer(flex: 1,),
                         Text(recipe.name,
                             style: GoogleFonts.montserrat(
                                 fontSize: 20, fontWeight: FontWeight.w900)),
                         Spacer(
                           flex: 1,
-                        ),)
+                        ),
                       ],
                     ),
                     Container(
@@ -61,7 +60,8 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
                         child: Text(
                           "Difficulty: over 5",
                           textAlign: TextAlign.left,
-                        )),
+                      )
+                    ),
                     Text(" "),
                     Text(recipe.name),
                   ]))

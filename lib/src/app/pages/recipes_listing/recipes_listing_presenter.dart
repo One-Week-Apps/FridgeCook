@@ -1,22 +1,20 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_recipes_repository.dart';
-import 'package:fridge_cook/src/data/repositories/random_products_generator.dart';
-import 'package:fridge_cook/src/domain/entities/performance.dart';
-import 'package:fridge_cook/src/domain/usecases/get_all_products_usecase.dart';
+import 'package:fridge_cook/src/domain/usecases/get_all_recipes_usecase.dart';
 
 class RecipesListingPresenter extends Presenter {
   Function getAllRecipesOnNext;
 
-  final GetAllProductsUseCase getAllRecipesUseCase;
+  final GetAllRecipesUseCase getAllRecipesUseCase;
 
   RecipesListingPresenter(recipesRepo)
       : getAllRecipesUseCase =
-            GetAllProductsUseCase(recipesRepo);
+            GetAllRecipesUseCase(recipesRepo);
 
-  void getAllProducts() {
+  void getAllRecipes() {
     int count = 5;
-    getAllRecipesUseCase.execute(_GetAllProductsUseCaseObserver(this),
-        GetAllProductsUseCaseParams(count));
+    getAllRecipesUseCase.execute(_GetAllRecipesUseCaseObserver(this),
+        GetAllRecipesUseCaseParams(count));
   }
 
   @override
@@ -25,7 +23,7 @@ class RecipesListingPresenter extends Presenter {
   }
 }
 
-class _GetAllProductsUseCaseObserver extends Observer<GetAllProductsUseCaseResponse> {
+class _GetAllRecipesUseCaseObserver extends Observer<GetAllRecipesUseCaseResponse> {
   final RecipesListingPresenter presenter;
 
   _GetAllRecipesUseCaseObserver(this.presenter);
@@ -38,6 +36,6 @@ class _GetAllProductsUseCaseObserver extends Observer<GetAllProductsUseCaseRespo
 
   @override
   void onNext(response) {
-    presenter.getAllProductsOnNext(response.products);
+    presenter.getAllRecipesOnNext(response.recipes);
   }
 }

@@ -15,8 +15,8 @@ import 'dart:convert';
 ///   }
 class GenerationsRequest {
   final String prompt;
-  final int? n;
-  final String? size;
+  final int n;
+  final String size;
 
   GenerationsRequest({
     this.prompt,

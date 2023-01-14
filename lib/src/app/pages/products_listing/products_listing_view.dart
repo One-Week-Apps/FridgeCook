@@ -25,25 +25,12 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     _ProductsListingRouteState()
       : super(ProductsListingController(DataProductsRepository()));
 
-  Widget _refreshProductsButton() {
-    var controller = FlutterCleanArchitecture.getController<ProductsListingController>(context);
-    return FloatingActionButton(
-      heroTag: "refreshProductsButton",
-      backgroundColor: Colors.black,
-      onPressed: () {
-        controller.flushProductsButtonPressed();
-      },
-      tooltip: 'Flush Salsa Products',
-      child: Icon(Icons.refresh),
-    );
-  }
-
   Widget _productTableViewCell(int index, Product item) {
     var controller = FlutterCleanArchitecture.getController<ProductsListingController>(context);
-    var move = controller.products[index];
-    print("move[${index.toString()}] = $move");
+    var product = controller.products[index];
+    print("product[${index.toString()}] = $product");
     var thumbnailWidth = MediaQuery.of(context).size.width - 100;
-    var thumbnail = Image.network(move.thumbnailUrlString, width: thumbnailWidth, height: thumbnailWidth * 360 / 480);
+    var thumbnail = product.image;//Image.network(product.thumbnailUrlString, width: thumbnailWidth, height: thumbnailWidth * 360 / 480);
 
     return InkWell(
                 child: Container(
@@ -55,7 +42,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                       thumbnail,
                       Row(
                         children: <Widget>[
-                          Text('\n' + move.name,
+                          Text('\n' + product.name,
                               style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w900)),
@@ -63,7 +50,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                             flex: 1,
                           ),
                           Image.asset(
-                  move.isLiked ? CustomImages.like : CustomImages.dislike,
+                  CustomImages.like,
                   width: 20,
                   height: 20,
                 )
@@ -72,14 +59,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                       Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Difficulty: ${move.difficulty} over 5",
+                            "Difficulty: ${1} over 5",
                             textAlign: TextAlign.left,
                           )),
                       Text(" "),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          move.description.substring(0, min(200, move.description.length - 1)) + "...\n"))
                     ],
                   ),
                 ),
@@ -87,23 +70,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                   Navigator.pushNamed(
                     context, 
                     RecipesDetailsRoute.routeName,
-                    arguments: move
+                    arguments: product
                   );
                 },
               );
-  }
-
-  Widget _ratePerformanceButton() {
-    var controller = FlutterCleanArchitecture.getController<ProductsListingController>(context);
-    return FloatingActionButton(
-      heroTag: "ratePerformanceButton",
-      backgroundColor: Colors.black,
-      onPressed: () {
-        controller.ratePerformanceButtonPressed(context);
-      },
-      tooltip: 'Flush Salsa Products',
-      child: Icon(Icons.done),
-    );
   }
 
   var _doOnce = true;
@@ -125,7 +95,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: Container(width: 200, padding: EdgeInsets.only(top: 100),
-        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[_refreshProductsButton(), SizedBox(width: 5), _ratePerformanceButton()]),
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[SizedBox(width: 5),]),
       ),
       appBar: AppBar(
         title: Text(
@@ -136,10 +106,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           IconButton(
             icon: Image.asset(CustomImages.trophy),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AchievementsRoute()),
-              );
             },
           )
         ],
@@ -150,26 +116,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           ],
         ),
       ),
-      body: Center(
-        child:
-            GridView.count(
-          crossAxisCount: 3,
-          children: [Center(
-              child: Text(""),
-            )],/*List.generate(100, (index) {
-            return Center(
-              child: Text(
-                'Item $index',
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            );
-          })*/
-        ),/*ListView(
-                padding: const EdgeInsets.all(8)
-                    .add(EdgeInsets.only(top: 100))
-                    .add(EdgeInsets.only(bottom: 50)),
-                children: children,
-      )*/,),
+      body: Center(),
     );
   }
 

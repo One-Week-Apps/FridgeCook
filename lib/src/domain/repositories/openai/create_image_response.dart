@@ -22,9 +22,9 @@ import 'package:http/http.dart';
 ///   }
 
 class GenerationsResponse {
-  final int? created;
-  final Map<String, dynamic>? data;
-  final String? imageUrl;
+  final int created;
+  final Map<String, dynamic> data;
+  final String imageUrl;
 
   const GenerationsResponse({
     this.created,

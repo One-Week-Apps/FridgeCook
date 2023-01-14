@@ -8,7 +8,6 @@ import 'package:fridge_cook/src/domain/repositories/openai/completions_request.d
 import 'package:fridge_cook/src/domain/entities/openai_models.dart';
 import 'package:fridge_cook/src/domain/repositories/openai/completions_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fridge_cook/src/domain/repositories/openai/completion_prompts.dart';
 
 class CompletionsApi {
   static final Uri completionsEndpoint =
@@ -16,10 +15,10 @@ class CompletionsApi {
 
   static final String key = DateFormat.yMMMd().format(DateTime.now());
 
-  static Future<String?> getForecast(List<Product> products) async {
+  static Future<String> getForecast(List<Product> products) async {
     final prefs = await SharedPreferences.getInstance();
 
-    String? storedForecast = prefs.getString(key);
+    String storedForecast = prefs.getString(key);
 
     if (storedForecast != null) {
       return storedForecast.trim();

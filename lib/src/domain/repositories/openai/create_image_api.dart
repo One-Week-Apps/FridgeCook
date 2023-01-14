@@ -9,10 +9,10 @@ class GenerationsApi {
   static final Uri generationsEndpoint =
       Uri.parse('https://api.openai.com/v1/images/generations');
 
-  static Future<String?> getForecast(String prompt) async {
+  static Future<String> getForecast(String prompt) async {
     final prefs = await SharedPreferences.getInstance();
 
-    String? stored = prefs.getString(prompt);
+    String stored = prefs.getString(prompt);
 
     if (stored != null) {
       return stored.trim();

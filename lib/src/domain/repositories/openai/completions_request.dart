@@ -23,12 +23,12 @@ class CompletionsRequest {
   final String model;
   final String prompt;
   final int maxTokens;
-  final double? temperature;
-  final int? topP;
-  final int? n;
-  final bool? stream;
-  final int? longprobs;
-  final String? stop;
+  final double temperature;
+  final int topP;
+  final int n;
+  final bool stream;
+  final int longprobs;
+  final String stop;
 
   CompletionsRequest({
     /*required */this.model,

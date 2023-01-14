@@ -18,4 +18,9 @@ class DataProductsRepository extends ProductsRepository {
   Future<List<Product>> getAllProducts() async {
     return products;
   }
+  
+  @override
+  Future<bool> add(Product product) {
+    products.add(product);
+  }
 }
