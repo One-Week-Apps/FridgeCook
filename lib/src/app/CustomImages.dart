@@ -9,6 +9,7 @@ class CustomImages {
   static const fire = _imagesPrefix + "fire.png";
   static const cup = _imagesPrefix + "cup.png";
   static const trophy = _imagesPrefix + "trophy.png";
+  static const trash = _imagesPrefix + "trash.png";
   static const stats = _imagesPrefix + "stats.png";
 
   static const onboardingScan = _imagesPrefix + "onboarding_scan.png";

@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fridge_cook/src/app/CustomImages.dart';
 import 'package:fridge_cook/src/domain/entities/recipe.dart';
 
 class RecipesDetailsRoute extends StatefulWidget {
@@ -55,33 +52,24 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
                         ),
                       ],
                     ),
-                    Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Difficulty: over 5",
-                          textAlign: TextAlign.left,
-                      )
-                    ),
-                    Text(" "),
-                    Text(recipe.name),
+                    recipe.image,
+                    Row(children: [ for (var ingredient in recipe.ingredients) Text('\u2022 ' + ingredient)]),
+                    Spacer(
+                      flex: 1
+                      ),
+                    Row(children: [ for (var i = 0; i < recipe.directions.length; i++) Text(i.toString() + '. ' + recipe.directions[i])])
                   ]))
             ],
           ),
       ),
             ),
             Spacer(
-      flex: 10,
+              flex: 10,
             ),
             Container(
       alignment: Alignment.bottomCenter,
       child: InkWell(
-          child: InkWell(
-              child: Stack(alignment: Alignment.center, children: [
-                Image.network(recipe.name),
-                Image.asset(CustomImages.play),
-              ]),
-              onTap: () {}
-            ),
+          child: Image.network(recipe.name),
       ),
             ),
             Spacer(

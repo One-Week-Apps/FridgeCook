@@ -9,7 +9,6 @@ import 'package:oktoast/oktoast.dart';
 import 'package:fridge_cook/src/app/pages/recipes_details/recipes_details_view.dart';
 import 'package:fridge_cook/src/app/pages/products_listing/products_listing_view.dart';
 import 'package:fridge_cook/src/app/pages/onboarding/onboarding_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CommonDeps {
   static final CommonDeps _singleton = CommonDeps._internal();
@@ -32,32 +31,20 @@ Future<void> main() async {
     tutorialCompleted = false;
   }
 
-  String lastDateTimeAppOpened;
-  try {
-    lastDateTimeAppOpened = await _sharedPref.read(SharedPreferencesKeys.lastDateTimeAppOpened);
-  } catch (e) {
-    lastDateTimeAppOpened = DateTime.utc(1970, 01, 01).toIso8601String();
-  }
-
-  final now = DateTime.now();
-  final yesterday = DateTime(now.year, now.month, now.day - 1);
-
-  final dateToCheck = DateTime.parse(lastDateTimeAppOpened).toLocal();
-  final aDate = DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
-  bool isFirstOpeningOfTheDay = aDate == yesterday;
-
-  lastDateTimeAppOpened = now.toUtc().toIso8601String();
-  await _sharedPref.save(SharedPreferencesKeys.lastDateTimeAppOpened, lastDateTimeAppOpened);
-
-  runApp(MyApp(tutorialCompleted, isFirstOpeningOfTheDay));
+  runApp(MyApp(tutorialCompleted));
 }
 
 const PrimaryColor = const Color(0xFFFFFFFF);
 
+class ColorModel with ChangeNotifier {
+  void updateDisplay() {
+    notifyListeners();
+  }
+}
+
 class MyApp extends StatelessWidget {
-  MyApp(this.tutorialCompleted, this.isFirstOpeningOfTheDay);
+  MyApp(this.tutorialCompleted);
   final bool tutorialCompleted;
-  final bool isFirstOpeningOfTheDay;
 
   @override
   Widget build(BuildContext context) {
