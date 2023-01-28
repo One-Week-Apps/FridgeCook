@@ -66,8 +66,9 @@ class MyApp extends StatelessWidget {
         routes: {
           ProductsListingRoute.routeName: (context) => ProductsListingRoute(),
           RecipesListingRoute.routeName:(context) => RecipesListingRoute(),
-          RecipesDetailsRoute.routeName: (context) { 
+          RecipesDetailsRoute.routeName: (context) {
             final Recipe recipe = ModalRoute.of(context).settings.arguments; 
+            print("PUSHING DETAILS $recipe");
             return RecipesDetailsRoute(recipe); 
           },
         },
