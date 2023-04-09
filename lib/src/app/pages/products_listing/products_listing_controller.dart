@@ -8,8 +8,8 @@ import 'products_listing_presenter.dart';
 import 'package:fridge_cook/main.dart';
 
 class ProductsListingController extends Controller {
-  int _counter;
-  List<Product> _products;
+  int _counter = 0;
+  List<Product> _products = [];
   
   // data used by the View
   int get counter => _counter;
@@ -17,9 +17,9 @@ class ProductsListingController extends Controller {
   
   final ProductsListingPresenter presenter;
   // Presenter should always be initialized this way
-  ProductsListingController(productsRepo)
+  ProductsListingController(productsRepo, productFetcher)
       : _counter = 0,
-        presenter = ProductsListingPresenter(productsRepo),
+        presenter = ProductsListingPresenter(productsRepo, productFetcher),
         super();
 
   @override
@@ -31,9 +31,21 @@ class ProductsListingController extends Controller {
       _products = products;
       refreshUI();
     };
+
+    presenter.addProductOnNext = (bool isAdded) {
+      // as a mutation occured products list must be updated
+      this.getAllProducts();
+    };
+
+    presenter.deleteProductOnNext = (bool isDeleted) {
+      // as a mutation occured products list must be updated
+      this.getAllProducts();
+    };
   }
 
   void getAllProducts() => presenter.getAllProducts();
+  void addProduct(String value) => presenter.addProduct(value);
+  void deleteProduct(String value) => presenter.deleteProduct(value);
 
   @override
   void onResumed() {

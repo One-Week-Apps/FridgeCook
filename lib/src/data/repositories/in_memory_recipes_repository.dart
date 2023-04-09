@@ -1,3 +1,4 @@
+import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/entities/recipe.dart';
 import 'package:fridge_cook/src/domain/repositories/recipes_repository.dart';
 
@@ -6,7 +7,7 @@ class InMemoryRecipesRepository extends RecipesRepository {
   InMemoryRecipesRepository(this.recipes);
   
   @override
-  Future<List<Recipe>> getAllRecipes() async {
+  Future<List<Recipe>> getAllRecipes(List<Product> products) async {
     return recipes;
   }
   

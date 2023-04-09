@@ -1,5 +1,6 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_recipes_repository.dart';
+import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/usecases/get_all_recipes_usecase.dart';
 
 class RecipesListingPresenter extends Presenter {
@@ -11,10 +12,10 @@ class RecipesListingPresenter extends Presenter {
       : getAllRecipesUseCase =
             GetAllRecipesUseCase(recipesRepo);
 
-  void getAllRecipes() {
-    int count = 5;
+  void getAllRecipes(List<Product> products) {
+    int count = 2;
     getAllRecipesUseCase.execute(_GetAllRecipesUseCaseObserver(this),
-        GetAllRecipesUseCaseParams(count));
+        GetAllRecipesUseCaseParams(products, count));
   }
 
   @override

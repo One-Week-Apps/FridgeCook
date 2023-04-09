@@ -8,11 +8,15 @@ class CompletionsResponseFormatter {
   static final orderedListRegex = new RegExp(r"\n\n\d+. ");
   static const SEPARATOR_TAG = "\n\n";
 
+  String getRecipeName(String response) {
+    return response.trim().split(SEPARATOR_TAG)[0];
+  }
+
   Recipe format(String response, String imageUrl, List<Product> products) {
     final trimmedResponse = response.trim();
-    final splittedResponse = trimmedResponse.split(SEPARATOR_TAG);
+    // final splittedResponse = trimmedResponse.split(SEPARATOR_TAG);
     
-    final recipeName = splittedResponse[0];
+    final recipeName = getRecipeName(response);//splittedResponse[0];
 
     final responseAfterIngredients = trimmedResponse.split(INGREDIENTS_TAG)[1].trim();
     final directionsResponseSplit = responseAfterIngredients.split(DIRECTIONS_TAG);
@@ -23,6 +27,6 @@ class CompletionsResponseFormatter {
     final directions = responseAfterDirections.split(orderedListRegex);
     directions.removeWhere((e) => e.isEmpty);
 
-    return Recipe(recipeName, ingredients, directions, Image.network(imageUrl), products);
+    return Recipe(recipeName, ingredients, directions, imageUrl, products);
   }
 }

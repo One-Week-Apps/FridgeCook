@@ -57,13 +57,13 @@ class CompletionsResponse {
   /// completions endpoint.
   factory CompletionsResponse.fromResponse(Response response) {
     // Get the response body in JSON format
-    Map<String, dynamic> responseBody = json.decode(response.body);
+    var responseBody = json.decode(response.body);
 
     // Parse out information from the response
-    Map<String, dynamic> usage = responseBody['usage'];
+    var usage = responseBody['usage'];
 
     // Parse out the choices
-    List<dynamic> choices = responseBody['choices'];
+    var choices = responseBody['choices'];
 
     // Get the text of the first completion
     String firstCompletion = choices[0]['text'];

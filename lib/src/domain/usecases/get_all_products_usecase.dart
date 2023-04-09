@@ -19,7 +19,8 @@ class GetAllProductsUseCase
     try {
       List<Product> products = await productsRepository.getAllProducts();
       controller.add(GetAllProductsUseCaseResponse(products));
-      logger.finest('GetProductUseCase successful.');
+      logger.finest('GetProductUseCase successful: ${products.length} ${products.first.name}');
+      logger.finest('=======================================================================');
       controller.close();
     } catch (e) {
       logger.severe('GetProductUseCase unsuccessful.');

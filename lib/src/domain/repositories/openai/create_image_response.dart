@@ -33,10 +33,8 @@ class GenerationsResponse {
   });
 
   factory GenerationsResponse.fromResponse(Response response) {
-    Map<String, dynamic> responseBody = json.decode(response.body);
-
-    Map<String, dynamic> data = responseBody['data'];
-
+    var responseBody = json.decode(response.body);
+    var data = responseBody['data'];
     String imageUrl = data[0]['url'];
 
     return GenerationsResponse(

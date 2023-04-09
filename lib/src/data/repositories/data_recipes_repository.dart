@@ -14,12 +14,12 @@ class DataRecipesRepository extends RecipesRepository {
         "Orange Cake",
         ["ingredients"],
         ["directions"],
-        Image.network("https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg"),
+        "https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg",
         [
           Product(
             "Orange",
             1,
-            Image.network("https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg"),
+            "https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg",
           ),
         ],
       ),
@@ -28,7 +28,7 @@ class DataRecipesRepository extends RecipesRepository {
   factory DataRecipesRepository() => _instance;
 
   @override
-  Future<List<Recipe>> getAllRecipes() async {
+  Future<List<Recipe>> getAllRecipes(List<Product> products) async {
     return recipes;
   }
 }

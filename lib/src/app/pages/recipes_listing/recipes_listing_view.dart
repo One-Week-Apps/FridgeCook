@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'dart:math';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:fridge_cook/src/data/repositories/data_recipes_repository.dart';
+import 'package:fridge_cook/src/data/repositories/remote_recipes_repository.dart';
 import 'package:fridge_cook/src/domain/entities/recipe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fridge_cook/src/app/CustomImages.dart';
@@ -25,7 +26,7 @@ class RecipesListingRoute extends View {
 class _RecipesListingRouteState extends ViewState<RecipesListingRoute, RecipesListingController>
     with SingleTickerProviderStateMixin {
     _RecipesListingRouteState()
-      : super(RecipesListingController(DataRecipesRepository()));
+      : super(RecipesListingController(RemoteRecipesRepository()));
 
   Widget _refreshRecipesButton() {
     var controller = FlutterCleanArchitecture.getController<RecipesListingController>(context);
@@ -45,7 +46,7 @@ class _RecipesListingRouteState extends ViewState<RecipesListingRoute, RecipesLi
     var recipe = controller.recipes[index];
     print("recipe[${index.toString()}] = $recipe");
     var thumbnailWidth = MediaQuery.of(context).size.width - 100;
-    var thumbnail = recipe.image;//Image.network(, width: thumbnailWidth, height: thumbnailWidth * 360 / 480);
+    var thumbnail = Image.network(recipe.image, width: thumbnailWidth, height: thumbnailWidth * 360 / 480);
 
     return InkWell(
                 child: Container(
@@ -100,7 +101,7 @@ class _RecipesListingRouteState extends ViewState<RecipesListingRoute, RecipesLi
 
     if (_doOnce) {
       _doOnce = false;
-      controller.getAllRecipes();
+      controller.getAllRecipes([]);
     }
 
     var children = <Widget>[

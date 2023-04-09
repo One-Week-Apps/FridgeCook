@@ -42,7 +42,7 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
               Padding(
                   padding: EdgeInsets.only(left: 10, right: 10),
                   child: Column(children: <Widget>[
-                    recipe.image,
+                    Image.network(recipe.image, width: 100, height: 100,),
                     // Spacer(),
                     Text(recipe.name,
                             style: GoogleFonts.montserrat(

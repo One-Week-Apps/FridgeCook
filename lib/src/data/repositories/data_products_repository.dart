@@ -8,8 +8,8 @@ class DataProductsRepository extends ProductsRepository {
   DataProductsRepository._internal() {
     products = <Product>[];
     products.addAll([
-      Product("Apple", 1, Image.network("https://media.istockphoto.com/id/184276818/fr/photo/pomme-rouge.jpg?s=612x612&w=0&k=20&c=yk9viCWt8_VHAvSvzPuqZI-A79xkestBMyCf1AEyhrc=")),
-      Product("Orange", 1, Image.network("https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg")),
+      Product("Apple", 1, "https://media.istockphoto.com/id/184276818/fr/photo/pomme-rouge.jpg?s=612x612&w=0&k=20&c=yk9viCWt8_VHAvSvzPuqZI-A79xkestBMyCf1AEyhrc="),
+      Product("Orange", 1, "https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg"),
     ]);
   }
   factory DataProductsRepository() => _instance;
@@ -20,7 +20,59 @@ class DataProductsRepository extends ProductsRepository {
   }
   
   @override
-  Future<bool> add(Product product) {
+  Future<bool> add(Product product) async {
+    
+    Product existingProduct;
+
+    try {
+      existingProduct = products.firstWhere((element) => element.name == product.name);
+    } catch (e) {
+      existingProduct = null;
+    }
+
+    if(existingProduct != null) {
+      return false;
+    }
+
     products.add(product);
+    return true;
+  }
+
+  Future<bool> delete(String id) async {
+    
+    Product existingProduct;
+
+    try {
+      existingProduct = products.firstWhere((element) => element.name == id);
+    } catch (e) {
+      existingProduct = null;
+    }
+
+    if(existingProduct == null) {
+      return false;
+    }
+
+    products.removeWhere((item) => item.name == id);
+    return true;
+  }
+  
+  @override
+  Future<Product> getProduct(String id) async {
+    Product existingProduct;
+
+    try {
+      existingProduct = products.firstWhere((element) => element.name == id);
+    } catch (e) {
+      existingProduct = null;
+    }
+
+    return existingProduct;
+  }
+
+  @override
+  Future<bool> updateProduct(String id, int newQuantity) async {
+    int index = products.indexWhere((element) => element.name == id);
+    products[index] = Product(products[index].name, newQuantity, products[index].image);
+    return true;
   }
 }

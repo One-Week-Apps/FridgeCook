@@ -9,7 +9,7 @@ import 'package:fridge_cook/main.dart';
 
 class RecipesListingController extends Controller {
   int _counter;
-  List<Recipe> _recipes;
+  List<Recipe> _recipes = [];
   
   // data used by the View
   int get counter => _counter;
@@ -33,7 +33,7 @@ class RecipesListingController extends Controller {
     };
   }
 
-  void getAllRecipes() => presenter.getAllRecipes();
+  void getAllRecipes(List<Product> products) => presenter.getAllRecipes(products);
 
   @override
   void onResumed() {
