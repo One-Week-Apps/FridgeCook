@@ -27,7 +27,7 @@ class GenerationsApi {
     GenerationsRequest request = GenerationsRequest(
       prompt: prompt,
       n: 1,
-      size: "512x512",
+      size: "256x256",
     );
 
     http.Response response = await http.post(generationsEndpoint,
