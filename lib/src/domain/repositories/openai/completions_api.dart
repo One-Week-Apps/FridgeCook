@@ -15,6 +15,36 @@ class CompletionsApi {
 
   static final String key = DateFormat.yMMMd().format(DateTime.now());
 
+  static Future<bool> isIngredient(String prompt) async {
+    
+    CompletionsRequest request = CompletionsRequest(
+      model: OpenAIModel.model(OpenAIModels.textDavinci002).identifier,
+      prompt: "Q: Is banana an ingredient?\ntrue\n\nQ: Is apple an ingredient?\ntrue\n\nQ: Is chair an ingredient?\nfalse\n\nQ: Is eggs an ingredient?\ntrue\n\nQ: Is Marylin Monroe and ingredient?\nfalse\n\nQ: Is fridge an ingredient?\nfalse\n\nQ: Is people an ingredient?\nfalse\n\nQ: Is atom an ingredient?\nfalse\n\nQ: Is bear an ingredient?\nfalse\n\nQ: Is tv an ingredient?\nfalse\n\nQ: Is berry an ingredient?\ntrue\n\nQ: Is $prompt an ingredient?\nA:",
+      maxTokens: 10,
+      temperature: 0,
+      topP: 1,
+    );
+
+    debugPrint('Sending OpenAI API request: $prompt');
+
+    http.Response response = await http.post(completionsEndpoint,
+        headers: openAIHeaders, body: request.toJson());
+
+    debugPrint('Received OpenAI API response: ${response.body}');
+
+    if (response.statusCode != 200) {
+      debugPrint(
+          'Failed to get a forecast with status code, ${response.statusCode}');
+    }
+
+    CompletionsResponse completionsResponse =
+        CompletionsResponse.fromResponse(response);
+
+    final completion = completionsResponse.firstCompletion?.trim()?.toLowerCase();
+
+    return completion.contains('true') || completion.contains('yes') ? true : false;
+  }
+
   static Future<String> getForecast(List<Product> products) async {
     final prefs = await SharedPreferences.getInstance();
 
