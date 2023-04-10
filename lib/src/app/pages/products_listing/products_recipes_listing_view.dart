@@ -183,7 +183,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
         controller.addProduct(value);
       }, decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Add a product:',
+              labelText: 'Add an ingredient:',
     ));
 
     Widget bottomOverlayView = Align(
@@ -233,7 +233,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.shopping_cart),
-          label: 'My Products',
+          label: 'My ingredients',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.dinner_dining),
