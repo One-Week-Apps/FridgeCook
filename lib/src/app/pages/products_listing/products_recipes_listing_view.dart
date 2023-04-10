@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:fridge_cook/src/app/pages/recipes_listing/recipes_listing_controller.dart';
@@ -37,7 +38,13 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   Widget _recipeTableViewCell(int index, Recipe item) {
     var recipe = item;
     print("recipe[${index.toString()}] = $recipe");
-    var thumbnail = Image.network(recipe.image, width: 100, height: 100,);
+    var thumbnail = CachedNetworkImage(
+      imageUrl: recipe.image,
+      placeholder: (context, url) => CircularProgressIndicator(),
+      errorWidget: (context, url, error) => Icon(null),
+      width: 100,
+      height: 100,
+    );
 
     return InkWell(
       child: Container(
@@ -130,7 +137,13 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           MaterialPageRoute(builder: (context) => FullScreenRemoteImageViewer(name)),
         );
       },
-      child: Image.network(name, width: width, height: height),
+      child: CachedNetworkImage(
+          imageUrl: name,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(null),
+          width: width,
+          height: width,
+        )//Image.network(name, width: width, height: height),
     );
   }
 
