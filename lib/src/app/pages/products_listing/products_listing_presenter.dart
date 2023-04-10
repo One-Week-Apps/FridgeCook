@@ -29,7 +29,12 @@ class ProductsListingPresenter extends Presenter {
 
   void deleteProduct(String value) {
     deleteProductUseCase.execute(_DeleteProductUseCaseObserver(this),
-        DeleteProductUseCaseParams(value));
+        DeleteProductUseCaseParams(value, true));
+  }
+
+  void deleteOne(String value) {
+    deleteProductUseCase.execute(_DeleteProductUseCaseObserver(this),
+        DeleteProductUseCaseParams(value, false));
   }
 
   @override

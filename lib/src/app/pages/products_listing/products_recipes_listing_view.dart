@@ -79,18 +79,17 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   }
 
   Widget _productTableViewCell(int index, Product product) {
-    var screenSize = MediaQuery.of(context).size;
-    var thumbnailWidth = screenSize.width / 2;
-    var thumbnailHeight = screenSize.height * 2 / 3 - 100;
-    var thumbnail = makeZoomableImage(product.image, thumbnailWidth, thumbnailHeight, context);
+    var thumbnailHeight = 100.0;
+    var thumbnail = makeZoomableImage(product.image, thumbnailHeight, context);
 
     return InkWell(
                 child: Container(
-                  width: 356,
-                  height: thumbnailHeight,
+                  width: MediaQuery.of(context).size.width,
+                  height: thumbnailHeight + 10,
                   color: Colors.white,
                   child: Column(
                     children: <Widget>[
+
                       // thumbnail,
                       Row(
                         children: <Widget>[
@@ -98,10 +97,28 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                               style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w900)),
-                          Spacer(
-                            flex: 1,
-                          ),
+                          Spacer(),
+                          Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.remove),
+                                      onPressed: () {
+                                        controller.deleteOne(product.name);
+                                      },
+                                    ),
+                                    Text(product.quantity.toString()),
+                                    IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: () {
+                                        controller.addProduct(product.name);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                          SizedBox(width: 50),
                           thumbnail,
+                          SizedBox(width: 50),
                           IconButton(
                             icon: Image.asset(CustomImages.trash),
                             onPressed: () {
@@ -111,6 +128,14 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                           ),
               ],
                       ),
+                      SizedBox(height: 5),
+                      const Divider(
+            height: 1,
+            thickness: 0.5,
+            indent: 0,
+            endIndent: 0,
+            color: Colors.grey,
+          ),
                     ],
                   ),
                 ),
@@ -121,14 +146,14 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   }
 
   String presentProductTitle(Product product) {
-    String message = '\n' + product.name;
-    if (product.quantity > 1) {
-      message += ' (x${product.quantity})';
-    }
+    String message = product.name;
+    // if (product.quantity > 1) {
+    //   message += ' (x${product.quantity})';
+    // }
     return message;  
   }
 
-  Widget makeZoomableImage(String name, double width, double height, BuildContext context) {
+  Widget makeZoomableImage(String name, double width, BuildContext context) {
     return InkWell(
       splashColor: Colors.white10,
       onTap: () {

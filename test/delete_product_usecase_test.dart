@@ -21,7 +21,7 @@ void main() {
     var repo = InMemoryProductsRepository([Product("banana", 1, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
-    getUserUseCase.execute(observer, DeleteProductUseCaseParams('apple'));
+    getUserUseCase.execute(observer, DeleteProductUseCaseParams('apple', true));
     while (!observer.status['progress'].contains('done')) {
       await Future.delayed(const Duration(seconds: 1));
     }
@@ -37,7 +37,40 @@ void main() {
     var repo = InMemoryProductsRepository([Product("banana", 1, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
-    getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana'));
+    getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', true));
+    while (!observer.status['progress'].contains('done')) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+    expect(observer.status['result'], 'success');
+    expect(repo.products.isEmpty, true);
+  });
+
+  test(
+      'Given deleteOneProductUseCase when Parameters ingredient exists',
+      () async {
+    DeleteProductUseCase getUserUseCase;
+    _Observer observer;
+    var repo = InMemoryProductsRepository([Product("banana", 3, "")]);
+    getUserUseCase = DeleteProductUseCase(repo);
+    observer = _Observer();
+    getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', false));
+    while (!observer.status['progress'].contains('done')) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+    expect(observer.status['result'], 'success');
+    expect(repo.products.isEmpty, false);
+    expect(repo.products.first.quantity, 2);
+  });
+
+  test(
+      'Given deleteOneProductUseCase when Parameters ingredient exists',
+      () async {
+    DeleteProductUseCase getUserUseCase;
+    _Observer observer;
+    var repo = InMemoryProductsRepository([Product("banana", 1, "")]);
+    getUserUseCase = DeleteProductUseCase(repo);
+    observer = _Observer();
+    getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', false));
     while (!observer.status['progress'].contains('done')) {
       await Future.delayed(const Duration(seconds: 1));
     }
@@ -53,7 +86,7 @@ void main() {
     var repo = InMemoryProductsRepository([Product("banana", 1, ""), Product("apple", 1, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
-    getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana'));
+    getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', true));
     while (!observer.status['progress'].contains('done')) {
       await Future.delayed(const Duration(seconds: 1));
     }

@@ -1,10 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:fridge_cook/src/domain/repositories/openai/create_image_api.dart';
-
-import '../entities/product.dart';
 import '../repositories/products_repository.dart';
 
 class DeleteProductUseCase
@@ -19,7 +15,18 @@ class DeleteProductUseCase
     final StreamController<DeleteProductUseCaseResponse> controller =
         StreamController();
     try {
-      bool isDeleted = await productsRepository.delete(params.product);
+      bool isDeleted;
+      if (params.shouldRemoveAllItems) {
+        isDeleted = await productsRepository.delete(params.product);
+      } else {
+        var existingProduct = await productsRepository.getProduct(params.product);
+
+        if (existingProduct.quantity > 1) {
+          isDeleted = await productsRepository.updateProduct(params.product, existingProduct.quantity - 1);
+        } else {
+          isDeleted = await productsRepository.delete(params.product);
+        }
+      }
       controller.add(DeleteProductUseCaseResponse(isDeleted));
       logger.finest('DeleteProductUseCase successful.');
       controller.close();
@@ -33,7 +40,8 @@ class DeleteProductUseCase
 
 class DeleteProductUseCaseParams {
   String product;
-  DeleteProductUseCaseParams(this.product);
+  bool shouldRemoveAllItems;
+  DeleteProductUseCaseParams(this.product, this.shouldRemoveAllItems);
 }
 
 class DeleteProductUseCaseResponse {

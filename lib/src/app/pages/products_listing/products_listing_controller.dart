@@ -46,6 +46,7 @@ class ProductsListingController extends Controller {
   void getAllProducts() => presenter.getAllProducts();
   void addProduct(String value) => presenter.addProduct(value);
   void deleteProduct(String value) => presenter.deleteProduct(value);
+  void deleteOne(String value) => presenter.deleteOne(value);
 
   @override
   void onResumed() {
