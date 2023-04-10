@@ -191,10 +191,16 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
       child: Container(color: Colors.white, child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16), child: textField,)),
     );
 
+    var listingHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - 60 - 105;
+
+    if (controller.products.isEmpty) {
+      Widget emptyProductsView = Container(padding: EdgeInsets.all(15), height: listingHeight, child: Text("Hum... 🤔\n\nIt looks like your fridge is empty for now... 👨‍🍳\n\nStart by adding some ingredients below!", style: TextStyle(fontSize: 17,)));
+      return Center(child: Stack(children: [emptyProductsView, bottomOverlayView]));
+    }
+
     var productsChildren = <Widget>[
       for (var i = 0 ; i < controller.products.length ; i++) _productTableViewCell(i, controller.products[i])
     ];
-    var listingHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - 60 - 105;
     Widget productsListingView = Container(height: listingHeight, child: ListView(padding: const EdgeInsets.all(8), children: productsChildren));
 
     return Center(child: Stack(children: [productsListingView, bottomOverlayView]));

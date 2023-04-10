@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:fridge_cook/src/app/CustomImages.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:oktoast/oktoast.dart';
 
 import 'products_listing_presenter.dart';
 
@@ -33,13 +34,21 @@ class ProductsListingController extends Controller {
     };
 
     presenter.addProductOnNext = (bool isAdded) {
-      // as a mutation occured products list must be updated
-      this.getAllProducts();
+      if (isAdded) {
+        // as a mutation occured products list must be updated
+        this.getAllProducts();
+      } else {
+        showToast("Sorry, we cannot add this ingredient...");
+      }
     };
 
     presenter.deleteProductOnNext = (bool isDeleted) {
-      // as a mutation occured products list must be updated
-      this.getAllProducts();
+      if (isDeleted) {
+        // as a mutation occured products list must be updated
+        this.getAllProducts();
+      } else {
+        showToast("Sorry, we cannot delete this ingredient...");
+      }
     };
   }
 
