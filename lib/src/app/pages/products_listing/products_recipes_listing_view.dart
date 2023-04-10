@@ -151,17 +151,25 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   int _selectedIndex = 0;
   @override
   Widget get view => buildPage();
+  
+  final _productController = TextEditingController();
 
   Widget productsListingView(ProductsListingController controller) {
-    Widget bottomOverlayView = Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(color: Colors.white, child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16), child: TextFormField(onFieldSubmitted: (value) {
+
+    var textField = TextFormField(
+      controller: _productController,
+      onFieldSubmitted: (value) {
         print("Field submitted ! " + value);
+        _productController.text = "";
         controller.addProduct(value);
       }, decoration: const InputDecoration(
               border: UnderlineInputBorder(),
               labelText: 'Add a product:',
-            )),)),
+    ));
+
+    Widget bottomOverlayView = Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(color: Colors.white, child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16), child: textField,)),
     );
 
     var productsChildren = <Widget>[
