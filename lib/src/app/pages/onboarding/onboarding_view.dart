@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_cook/src/app/widgets/full_screen_image_viewer.dart';
 import 'package:fridge_cook/src/data/repositories/SharedPref.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -25,10 +26,10 @@ class OnboardingRoute extends StatelessWidget {
               Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Spacer(flex: 1),
+                Spacer(flex: 2),
                 Text('Scan all your ingredients\nusing your device\'s camera!', textAlign: TextAlign.center, style: style,),
                 Spacer(flex: 1),
-                Image.asset(CustomImages.onboardingScan, height: 300,),
+                makeOnboardingImage(CustomImages.onboardingScan, context),
                 goToNextAnimationView,
                 Spacer(flex: 1),
               ]),
@@ -37,10 +38,10 @@ class OnboardingRoute extends StatelessWidget {
               Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Spacer(flex: 1),
+                Spacer(flex: 2),
                 Text('Wrong ingredients or quantities?\nAlready cooked?\nReview and modify your ingredients anytime!', textAlign: TextAlign.center, style: style,),
                 Spacer(flex: 1),
-                Image.asset(CustomImages.onboardingListing, height: 300,),
+                makeOnboardingImage(CustomImages.onboardingListing, context),
                 goToNextAnimationView,
                 Spacer(flex: 1),
               ]),
@@ -49,10 +50,10 @@ class OnboardingRoute extends StatelessWidget {
               Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Spacer(flex: 1),
+                Spacer(flex: 2),
                 Text('Tadam!\nCustom recipes suggestions are \nautomatically generated based on your ingredients!', textAlign: TextAlign.center, style: style,),
                 Spacer(flex: 1),
-                Image.asset(CustomImages.onboardingRecipesListing, height: 300,),
+                makeOnboardingImage(CustomImages.onboardingRecipesListing, context),
                 goToNextAnimationView,
                 Spacer(flex: 1),
               ]),
@@ -60,10 +61,10 @@ class OnboardingRoute extends StatelessWidget {
               Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Spacer(flex: 1),
+                Spacer(flex: 2),
                 Text('Get more details \nby selecting a particular recipe.', textAlign: TextAlign.center, style: style,),
                 Spacer(flex: 1),
-                Image.asset(CustomImages.onboardingRecipeDetails, height: 250,),
+                makeOnboardingImage(CustomImages.onboardingRecipeDetails, context),
                 goToNextAnimationView,
                 Spacer(flex: 1),
               ]),
@@ -92,6 +93,28 @@ class OnboardingRoute extends StatelessWidget {
             ],
           )
           ),
+    );
+  }
+
+  Widget makeOnboardingImage(String name, BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    var imageHeight = screenSize.height * 2 / 3 - 100;
+
+    return InkWell(
+      splashColor: Colors.white10,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FullScreenImageViewer(name)),
+        );
+      },
+      child: Ink.image(
+        fit: BoxFit.fitHeight,
+        height: imageHeight,
+        image: AssetImage(
+          name
+        ),
+      )
     );
   }
 }
