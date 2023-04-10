@@ -93,10 +93,11 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                       // thumbnail,
                       Row(
                         children: <Widget>[
-                          Text(presentProductTitle(product),
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900)),
+                          Text(product.name,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w900)),
                           Spacer(),
                           Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -145,14 +146,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
               );
   }
 
-  String presentProductTitle(Product product) {
-    String message = product.name;
-    // if (product.quantity > 1) {
-    //   message += ' (x${product.quantity})';
-    // }
-    return message;  
-  }
-
   Widget makeZoomableImage(String name, double width, BuildContext context) {
     return InkWell(
       splashColor: Colors.white10,
@@ -182,6 +175,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   Widget productsListingView(ProductsListingController controller) {
 
     var textField = TextFormField(
+      maxLength: 10,
       controller: _productController,
       onFieldSubmitted: (value) {
         print("Field submitted ! " + value);
@@ -200,7 +194,8 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     var productsChildren = <Widget>[
       for (var i = 0 ; i < controller.products.length ; i++) _productTableViewCell(i, controller.products[i])
     ];
-    Widget productsListingView = ListView(padding: const EdgeInsets.all(8), children: productsChildren);
+    var listingHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - 60 - 105;
+    Widget productsListingView = Container(height: listingHeight, child: ListView(padding: const EdgeInsets.all(8), children: productsChildren));
 
     return Center(child: Stack(children: [productsListingView, bottomOverlayView]));
   }
