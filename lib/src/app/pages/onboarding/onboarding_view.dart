@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_cook/src/app/pages/products_listing/products_recipes_listing_view.dart';
 import 'package:fridge_cook/src/app/widgets/full_screen_image_viewer.dart';
 import 'package:fridge_cook/src/data/repositories/SharedPref.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:fridge_cook/src/app/CustomImages.dart';
 import '../../SharedPreferencesKeys.dart';
-import '../products_listing/products_listing_view.dart';
 
 class OnboardingRoute extends StatelessWidget {
   @override
@@ -88,8 +88,6 @@ class OnboardingRoute extends StatelessWidget {
                 ),
                 Spacer(flex: 1),
               ]),
-
-
             ],
           )
           ),
