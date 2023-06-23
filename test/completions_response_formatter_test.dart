@@ -15,9 +15,14 @@ void main() {
   test('should format name correctly', () async {
     var sut = CompletionsResponseFormatter();
     
-    var formattedName = sut.getRecipeName("\n\nApple Banana Bread Recipe\n\nIngredients:\n\n1 cup mashed ripe bananas\n\n1/2 cup unsweetened applesauce\n\n1/4 cup vegetable oil\n\n2 eggs\n\n1 teaspoon vanilla extract\n\n1 3/4 cups all-purpose flour\n\n1 cup sugar\n\n1 teaspoon baking soda\n\n1 teaspoon baking powder\n\n1/2 teaspoon salt\n\n1/2 teaspoon ground cinnamon\n\nDirections:\n\n1. Preheat oven to 350°. Grease a 9x5-in. loaf pan with cooking spray.\n\n2. In a large");
+    var formattedName = sut.getRecipeName("""\n\nName: Apple Pie\n\n  Ingredients: Flour, sugar, salt, butter, egg, ice water, apple, lemon juice, cinnamon, nutmeg,
+      allspice\n\nRecipe:\n\n1. Preheat oven to 375 degrees F (190 degrees C).\n2. Line pie dish with one pie crust. In a large bowl,
+      combine sugar, flour, salt, and butter. Cut in butter until it resembles coarse crumbs. Stir in egg and just enough ice water to
+      make dough come together.\n3. In a separate bowl, mix together apples, lemon juice, sugar, cinnamon, nutmeg, and allspice.\n4. Pour
+      apple mixture into the crust, and top with the other crust. Crimp and flute edges. Cut slits in top crust to vent.\n5. Bake pie on
+      lower shelf of oven for about 50 minutes, or until crust is golden brown.""");
 
-    expect(formattedName, "Apple Banana Bread Recipe");
+    expect(formattedName, "Apple Pie");
   });
 
   test('should format response correctly', () async {
@@ -32,30 +37,33 @@ void main() {
     ];
 
     var formattedResponse = sut.format(
-      "\n\nApple Banana Bread Recipe\n\nIngredients:\n\n1 cup mashed ripe bananas\n\n1/2 cup unsweetened applesauce\n\n1/4 cup vegetable oil\n\n2 eggs\n\n1 teaspoon vanilla extract\n\n1 3/4 cups all-purpose flour\n\n1 cup sugar\n\n1 teaspoon baking soda\n\n1 teaspoon baking powder\n\n1/2 teaspoon salt\n\n1/2 teaspoon ground cinnamon\n\nDirections:\n\n1. Preheat oven to 350°. Grease a 9x5-in. loaf pan with cooking spray.\n\n2. In a large",
+      """\n\nName: Apple Pie\n\n  Ingredients: Flour, sugar, salt, butter, egg, ice water, apple, lemon juice, cinnamon, nutmeg, allspice\n\nRecipe:\n\n1. Preheat oven to 375 degrees F (190 degrees C).\n2. Line pie dish with one pie crust. In a large bowl, combine sugar, flour, salt, and butter. Cut in butter until it resembles coarse crumbs. Stir in egg and just enough ice water to make dough come together.\n3. In a separate bowl, mix together apples, lemon juice, sugar, cinnamon, nutmeg, and allspice.\n4. Pour apple mixture into the crust, and top with the other crust. Crimp and flute edges. Cut slits in top crust to vent.\n5. Bake pie on lower shelf of oven for about 50 minutes, or until crust is golden brown.""",
       imageUrl,
       products
     );
 
-    expect(formattedResponse.name, "Apple Banana Bread Recipe");
+    expect(formattedResponse.name, "Apple Pie");
     expect(formattedResponse.ingredients, 
     [
-      "1 cup mashed ripe bananas",
-      "1/2 cup unsweetened applesauce",
-      "1/4 cup vegetable oil",
-      "2 eggs",
-      "1 teaspoon vanilla extract",
-      "1 3/4 cups all-purpose flour",
-      "1 cup sugar",
-      "1 teaspoon baking soda",
-      "1 teaspoon baking powder",
-      "1/2 teaspoon salt",
-      "1/2 teaspoon ground cinnamon",
+      "Flour",
+      "sugar",
+      "salt",
+      "butter",
+      "egg",
+      "ice water",
+      "apple",
+      "lemon juice",
+      "cinnamon",
+      "nutmeg",
+      "allspice",
     ]);
     expect(formattedResponse.directions,
     [
-      "Preheat oven to 350°. Grease a 9x5-in. loaf pan with cooking spray.",
-      "In a large"
+      """Preheat oven to 375 degrees F (190 degrees C).""",
+      """Line pie dish with one pie crust. In a large bowl, combine sugar, flour, salt, and butter. Cut in butter until it resembles coarse crumbs. Stir in egg and just enough ice water to make dough come together.""",
+      """In a separate bowl, mix together apples, lemon juice, sugar, cinnamon, nutmeg, and allspice.""",
+      """Pour apple mixture into the crust, and top with the other crust. Crimp and flute edges. Cut slits in top crust to vent.""",
+      """Bake pie on lower shelf of oven for about 50 minutes, or until crust is golden brown.""",
     ]);
     expect(formattedResponse.image, isNot(null));
     expect(formattedResponse.products, products);
