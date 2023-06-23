@@ -70,8 +70,8 @@ class CompletionsApi {
     CompletionsRequest request = CompletionsRequest(
       model: OpenAIModel.model(OpenAIModels.textDavinci002).identifier,
       prompt: prompt,
-      maxTokens: 128,
-      temperature: 0.9,
+      maxTokens: 3400,
+      temperature: 0.4,
       n: 10,
     );
 
