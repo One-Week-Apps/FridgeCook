@@ -37,7 +37,7 @@ void main() {
     ];
 
     var formattedResponse = sut.format(
-      """\n\nName: Apple Pie\n\n  Ingredients: Flour, sugar, salt, butter, egg, ice water, apple, lemon juice, cinnamon, nutmeg, allspice\n\nRecipe:\n\n1. Preheat oven to 375 degrees F (190 degrees C).\n2. Line pie dish with one pie crust. In a large bowl, combine sugar, flour, salt, and butter. Cut in butter until it resembles coarse crumbs. Stir in egg and just enough ice water to make dough come together.\n3. In a separate bowl, mix together apples, lemon juice, sugar, cinnamon, nutmeg, and allspice.\n4. Pour apple mixture into the crust, and top with the other crust. Crimp and flute edges. Cut slits in top crust to vent.\n5. Bake pie on lower shelf of oven for about 50 minutes, or until crust is golden brown.""",
+      """\n\nName: Apple Pie\n\nIngredients: Flour, sugar, salt, butter, egg, ice water, apple, lemon juice, cinnamon, nutmeg, allspice\n\nRecipe:\n\n1. Preheat oven to 375 degrees F (190 degrees C).\n2. Line pie dish with one pie crust. In a large bowl, combine sugar, flour, salt, and butter. Cut in butter until it resembles coarse crumbs. Stir in egg and just enough ice water to make dough come together.\n3. In a separate bowl, mix together apples, lemon juice, sugar, cinnamon, nutmeg, and allspice.\n4. Pour apple mixture into the crust, and top with the other crust. Crimp and flute edges. Cut slits in top crust to vent.\n5. Bake pie on lower shelf of oven for about 50 minutes, or until crust is golden brown.""",
       imageUrl,
       products
     );

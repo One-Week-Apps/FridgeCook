@@ -21,7 +21,7 @@ class CompletionsResponseFormatter {
     final responseAfterIngredients = trimmedResponse.split(INGREDIENTS_TAG)[1].trim();
     final directionsResponseSplit = responseAfterIngredients.split(SEPARATOR_TAG + DIRECTIONS_TAG);
     final ingredients = directionsResponseSplit[0].split(INGREDIENTS_SEPARATOR_TAG);
-    ingredients.removeWhere((e) => e.isEmpty);
+    ingredients.removeWhere((e) => e.isEmpty || e.contains("\n"));
 
     final responseAfterDirections = directionsResponseSplit[1];
     final directions = responseAfterDirections.split(orderedListRegex);
