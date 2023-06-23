@@ -14,6 +14,7 @@ class CompletionsApi {
       Uri.parse('https://api.openai.com/v1/completions');
 
   static final String key = DateFormat.yMMMd().format(DateTime.now());
+  static final String FORECASTS_SEPARATOR_KEY = "#";
 
   static Future<bool> isIngredient(String prompt) async {
     
@@ -45,17 +46,21 @@ class CompletionsApi {
     return completion.contains('true') || completion.contains('yes') ? true : false;
   }
 
-  static Future<String> getForecast(List<Product> products) async {
+  static Future<List<String>> getForecast(List<Product> products) async {
     final prefs = await SharedPreferences.getInstance();
 
     String storedForecast = prefs.getString(key);
 
     if (storedForecast != null) {
-      return storedForecast.trim();
+      return storedForecast.split(FORECASTS_SEPARATOR_KEY).map((e) => e.trim()).toList();
     }
     else {
       CompletionsResponse newForecast = await getNewForecast(products);
-      return newForecast.firstCompletion?.trim();
+      if (newForecast.completions != null) {
+        return newForecast.completions.map((e) => e.trim()).toList();
+      } else {
+        return [];
+      }
     }
   }
 
@@ -67,6 +72,7 @@ class CompletionsApi {
       prompt: prompt,
       maxTokens: 128,
       temperature: 0.9,
+      n: 10,
     );
 
     debugPrint('Sending OpenAI API request: $prompt');
@@ -92,8 +98,8 @@ class CompletionsApi {
   static Future<void> save(CompletionsResponse response) async {
     final prefs = await SharedPreferences.getInstance();
 
-    if (response.firstCompletion != null) {
-      await prefs.setString(key, response.firstCompletion);
+    if (response.completions != null) {
+      await prefs.setString(key, response.completions.join(FORECASTS_SEPARATOR_KEY));
     }
   }
 }

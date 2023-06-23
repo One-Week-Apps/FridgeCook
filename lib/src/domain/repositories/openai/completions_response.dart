@@ -39,6 +39,7 @@ class CompletionsResponse {
   final int completionTokens;
   final int totalTokens;
   final String firstCompletion;
+  final List<String> completions;
 
   const CompletionsResponse({
     /*required */this.id,
@@ -51,6 +52,7 @@ class CompletionsResponse {
     /*required */this.completionTokens,
     /*required */this.totalTokens,
     /*required */this.firstCompletion,
+    this.completions,
   });
 
   /// Returns a [CompletionResponse] from the JSON obtained from the
@@ -65,8 +67,14 @@ class CompletionsResponse {
     // Parse out the choices
     var choices = responseBody['choices'];
 
-    // Get the text of the first completion
-    String firstCompletion = choices[0]['text'];
+    // Get the text for the different completions
+    print("DEBUG_SESSION choices = " + choices.runtimeType.toString());
+
+    List<String> completions = [];
+    for (var choice in choices) {
+      completions.add(choice['text']);
+    }
+    String firstCompletion = completions[0];
 
     return CompletionsResponse(
       id: responseBody['userId'],
@@ -79,6 +87,7 @@ class CompletionsResponse {
       completionTokens: usage['completion_tokens'],
       totalTokens: usage['total_tokens'],
       firstCompletion: firstCompletion,
+      completions: completions,
     );
   }
 }
