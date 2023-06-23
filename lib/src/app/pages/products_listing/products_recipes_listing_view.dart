@@ -20,10 +20,13 @@ class ProductsListingRoute extends View {
   final String title;
 
   @override
-  _ProductsListingRouteState createState() => _ProductsListingRouteState(
-    ProductsListingController(SharedPreferencesProductRepository(), RemoteProductFetcher()),
-    RecipesListingController(RemoteRecipesRepository())
+  _ProductsListingRouteState createState() {
+    final productsListingController = ProductsListingController(SharedPreferencesProductRepository(), RemoteProductFetcher());
+    return _ProductsListingRouteState(
+    productsListingController,
+    RecipesListingController(RemoteRecipesRepository(), productsListingController)
     );
+  } 
 }
 
 class _ProductsListingRouteState extends ViewState<ProductsListingRoute, ProductsListingController>

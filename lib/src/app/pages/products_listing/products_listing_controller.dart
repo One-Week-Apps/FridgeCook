@@ -23,6 +23,10 @@ class ProductsListingController extends Controller {
         presenter = ProductsListingPresenter(productsRepo, productFetcher),
         super();
 
+  void refreshUI() {
+    super.refreshUI();
+  }
+
   @override
   // this is called automatically by the parent class
   void initListeners() {
