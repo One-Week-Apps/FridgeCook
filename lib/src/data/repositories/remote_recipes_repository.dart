@@ -10,11 +10,22 @@ class RemoteRecipesRepository extends RecipesRepository {
   
   @override
   Future<List<Recipe>> getAllRecipes(List<Product> products) async {
-    String forecast = await CompletionsApi.getForecast(products);
+    List<String> forecastArray = await CompletionsApi.getForecast(products);
     var formatter = CompletionsResponseFormatter();
-    String recipeName = formatter.getRecipeName(forecast);
-    String imageUrl = await GenerationsApi.getForecast(recipeName);
-    var recipe = formatter.format(forecast, imageUrl, products);
-    return [recipe];
+
+    List<Recipe> recipes = [];
+    for(var forecast in forecastArray) {
+      String recipeName = formatter.getRecipeName(forecast);
+      if (recipes.map((e) => e.name).contains(recipeName)) {
+        continue;
+      }
+
+      String imageUrl = await GenerationsApi.getForecast(recipeName);
+      var recipe = formatter.format(forecast, imageUrl, products);
+      
+      recipes.add(recipe);
+    }
+
+    return recipes;
   }
 }
