@@ -17,4 +17,38 @@ class ProductCategory {
   static const cereals = const ProductCategory._internal('Cereals', CustomImages.cereals);
   static const sugar = const ProductCategory._internal('Sugar', CustomImages.sugar);
   static const food = const ProductCategory._internal('Food', CustomImages.food);
+
+  static ProductCategory fromName(String name) {
+    ProductCategory category;
+    switch (name.toLowerCase()) {
+      case 'Vegetables':
+      category = vegetables;
+      break;
+      case 'Meat':
+      category = meat;
+      break;
+      case 'Fish':
+      category = fish;
+      break;
+      case 'Dairy':
+      category = dairy;
+      break;
+      case 'Fruits':
+      category = fruits;
+      break;
+      case 'Drinks':
+      category = drinks;
+      break;
+      case 'Cereals':
+      category = cereals;
+      break;
+      case 'Sugar':
+      category = sugar;
+      break;
+      case 'Food':
+      category = food;
+      break;
+    }
+    return category;
+  }
 }

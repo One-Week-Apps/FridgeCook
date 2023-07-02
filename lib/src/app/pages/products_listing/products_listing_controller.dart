@@ -44,12 +44,15 @@ class ProductsListingController extends Controller {
     presenter.getAllProductsOnNext = (List<Product> products) {
       print(products.toString());
       _products = products;
+      print("DEBUG_SESSION OK7");
       refreshUI();
     };
 
     presenter.addProductOnNext = (bool isAdded) {
+      print("DEBUG_SESSION OK3d");
       if (isAdded) {
         // as a mutation occured products list must be updated
+        print("DEBUG_SESSION OK6");
         this.getAllProducts();
       } else {
         showToast("Sorry, we cannot add this ingredient...");

@@ -11,10 +11,12 @@ class RemoteProductFetcher extends ProductFetcher {
   Future<Product> fetchProduct(String id) async {
     bool isIngredient = await CompletionsApi.isIngredient(id);
 
+    print("DEBUG_SESSION OK0");
     if (isIngredient == false) {
       return null;
     }
 
+    print("DEBUG_SESSION OK1");
     var imageUrl = await GenerationsApi.getForecast(id);
     return Product(id, 1, ProductCategory.food, imageUrl);
   }

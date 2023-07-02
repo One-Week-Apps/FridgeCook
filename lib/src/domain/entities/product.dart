@@ -15,13 +15,13 @@ class Product {
   Product.fromJson(Map<String, dynamic> json)
     : name = json['name'],
       quantity = json['quantity'],
-      category = json['category'],
+      category = ProductCategory.fromName(json['category']),
       image = json['image'];
 
   Map<String, dynamic> toJson() => {
         'name': this.name,
         'quantity': this.quantity,
-        'category': this.category,
+        'category': this.category.name,
         'image': this.image
       };
 }

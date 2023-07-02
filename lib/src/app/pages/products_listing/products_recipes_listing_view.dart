@@ -391,7 +391,24 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   }
 
   void addProducts(List<String> productNames){
+
+    // first we dismiss the 'New ingredients' modal window
+    Navigator.pop(context);
     setState(() {});
+
+    List<String> args = [
+      'Adding your ingredients...',
+      'Your ingredients will be added soon. We\'re cooking for you!',
+    ];
+    Navigator.pushNamed(
+      context,
+      LoaderRoute.routeName,
+      arguments: args,
+    );
+
+    _refreshSinceLoadCounter = 0;
+    _isLoaderDisplayed = true;
+
     for (var productName in productNames) {
       controller.addProduct(productName);
     }
@@ -466,7 +483,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
       body: ControlledWidgetBuilder<ProductsListingController>(builder: (context, controller) {
         // since a refresh occured we dismiss loader modals
         //Navigator.maybePop(context, _doOnce == false);
-        print("DEBUG_SESSION UI REFRESH");
+        print("DEBUG_SESSION UI REFRESH $_isLoaderDisplayed $_refreshSinceLoadCounter");
         if (_isLoaderDisplayed) {
           _refreshSinceLoadCounter += 1;
           if (_refreshSinceLoadCounter == 2) {

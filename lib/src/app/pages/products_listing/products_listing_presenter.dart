@@ -98,6 +98,7 @@ class _AddProductUseCaseObserver extends Observer<AddProductUseCaseResponse> {
 
   @override
   void onNext(response) {
+    print("DEBUG_SESSION OK3c");
     presenter.addProductOnNext(response.isAdded);
   }
 }

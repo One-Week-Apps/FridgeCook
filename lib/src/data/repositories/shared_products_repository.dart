@@ -10,13 +10,17 @@ class SharedPreferencesProductRepository extends ProductsRepository {
 
   @override
   Future<bool> add(Product product) async {
+    print("DEBUG_SESSION OK3d1");
     int productCount = await getProductsCount();
     productCount++;
     await _sharedPref.save(SharedPreferencesKeys.productCount, productCount);
+    print("DEBUG_SESSION OK3d2");
 
     var key = _makeProductKey(productCount);
     await _sharedPref.save(key, product.toJson());
+    print("DEBUG_SESSION OK3d3");
 
+    print("DEBUG_SESSION OK3dEND");
     return true;
   }
 
