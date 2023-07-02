@@ -73,7 +73,7 @@ class OnboardingRoute extends StatelessWidget {
                 Spacer(flex: 3),
                 makeOnboardingImage(CustomImages.onboardingScan, context),
                 Spacer(flex: 2),
-                Text('Scan all your ingredients\nusing your device\'s camera!', textAlign: TextAlign.center, style: style,),
+                Text('Start by adding\n all the ingredients you have\nfor cooking!', textAlign: TextAlign.center, style: style,),
                 Spacer(flex: 2),
                 goToNextAnimationView,
                 Spacer(flex: 1),
