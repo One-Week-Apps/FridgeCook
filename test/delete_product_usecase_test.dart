@@ -2,6 +2,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_products_repository.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:fridge_cook/src/domain/usecases/delete_product_usecase.dart';
 
 void main() {
@@ -18,7 +19,7 @@ void main() {
       () async {
     DeleteProductUseCase getUserUseCase;
     _Observer observer;
-    var repo = InMemoryProductsRepository([Product("banana", 1, "")]);
+    var repo = InMemoryProductsRepository([Product("banana", 1, ProductCategory.fruits, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
     getUserUseCase.execute(observer, DeleteProductUseCaseParams('apple', true));
@@ -34,7 +35,7 @@ void main() {
       () async {
     DeleteProductUseCase getUserUseCase;
     _Observer observer;
-    var repo = InMemoryProductsRepository([Product("banana", 1, "")]);
+    var repo = InMemoryProductsRepository([Product("banana", 1, ProductCategory.fruits, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
     getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', true));
@@ -50,7 +51,7 @@ void main() {
       () async {
     DeleteProductUseCase getUserUseCase;
     _Observer observer;
-    var repo = InMemoryProductsRepository([Product("banana", 3, "")]);
+    var repo = InMemoryProductsRepository([Product("banana", 3, ProductCategory.fruits, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
     getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', false));
@@ -67,7 +68,7 @@ void main() {
       () async {
     DeleteProductUseCase getUserUseCase;
     _Observer observer;
-    var repo = InMemoryProductsRepository([Product("banana", 1, "")]);
+    var repo = InMemoryProductsRepository([Product("banana", 1, ProductCategory.fruits, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
     getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', false));
@@ -83,7 +84,7 @@ void main() {
       () async {
     DeleteProductUseCase getUserUseCase;
     _Observer observer;
-    var repo = InMemoryProductsRepository([Product("banana", 1, ""), Product("apple", 1, "")]);
+    var repo = InMemoryProductsRepository([Product("banana", 1, ProductCategory.fruits, ""), Product("apple", 1, ProductCategory.fruits, "")]);
     getUserUseCase = DeleteProductUseCase(repo);
     observer = _Observer();
     getUserUseCase.execute(observer, DeleteProductUseCaseParams('banana', true));

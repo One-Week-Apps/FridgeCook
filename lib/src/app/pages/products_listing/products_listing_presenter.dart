@@ -1,20 +1,28 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:fridge_cook/src/domain/usecases/add_product_usecase.dart';
 import 'package:fridge_cook/src/domain/usecases/delete_product_usecase.dart';
+import 'package:fridge_cook/src/domain/usecases/get_all_categories_usecase.dart';
 import 'package:fridge_cook/src/domain/usecases/get_all_products_usecase.dart';
 
 class ProductsListingPresenter extends Presenter {
+  Function getAllCategoriesOnNext;
   Function getAllProductsOnNext;
   Function addProductOnNext;
   Function deleteProductOnNext;
 
+  final GetAllCategoriesUseCase getAllCategoriesUseCase;
   final GetAllProductsUseCase getAllProductsUseCase;
   final AddProductUseCase addProductUseCase;
   final DeleteProductUseCase deleteProductUseCase;
 
-  ProductsListingPresenter(productsRepo, productFetcher)
-      : getAllProductsUseCase =
+  ProductsListingPresenter(categoriesRepo, productsRepo, productFetcher)
+      : getAllCategoriesUseCase = GetAllCategoriesUseCase(categoriesRepo), getAllProductsUseCase =
             GetAllProductsUseCase(productsRepo), addProductUseCase = AddProductUseCase(productsRepo, productFetcher), deleteProductUseCase = DeleteProductUseCase(productsRepo);
+
+  void getAllCategories() {
+    getAllCategoriesUseCase.execute(_GetAllCategoriesUseCaseObserver(this),
+        GetAllCategoriesUseCaseParams());
+  }
 
   void getAllProducts() {
     int productsToPerformCount = 5;
@@ -40,6 +48,23 @@ class ProductsListingPresenter extends Presenter {
   @override
   void dispose() {
     getAllProductsUseCase.dispose();
+  }
+}
+
+class _GetAllCategoriesUseCaseObserver extends Observer<GetAllCategoriesUseCaseResponse> {
+  final ProductsListingPresenter presenter;
+
+  _GetAllCategoriesUseCaseObserver(this.presenter);
+
+  @override
+  void onComplete() {}
+
+  @override
+  void onError(e) {}
+
+  @override
+  void onNext(response) {
+    presenter.getAllCategoriesOnNext(response.categories);
   }
 }
 

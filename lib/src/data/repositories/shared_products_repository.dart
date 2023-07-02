@@ -1,6 +1,7 @@
 import 'package:fridge_cook/src/app/SharedPreferencesKeys.dart';
 import 'package:fridge_cook/src/data/repositories/SharedPref.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:fridge_cook/src/domain/repositories/products_repository.dart';
 
 class SharedPreferencesProductRepository extends ProductsRepository {
@@ -138,7 +139,7 @@ class SharedPreferencesProductRepository extends ProductsRepository {
       try {
         var prodJson = await _sharedPref.read(key);
         var prod = Product.fromJson(prodJson);
-        prod = Product(prod.name, newQuantity, prod.image);
+        prod = Product(prod.name, newQuantity, ProductCategory.food, prod.image);
         if (prod.name == id) {
           await _sharedPref.save(key, prod.toJson());
           return true;

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_products_repository.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_recipes_repository.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:fridge_cook/src/domain/entities/recipe.dart';
 import 'package:fridge_cook/src/domain/usecases/get_all_recipes_usecase.dart';
 
@@ -20,11 +21,11 @@ void main() {
       () async {
     GetAllRecipesUseCase getUserUseCase;
     _Observer observer;
-    var recipes = [Recipe('banana cake', [''], [''], '', [Product("banana", 1, "")])];
+    var recipes = [Recipe('banana cake', [''], [''], '', [Product("banana", 1, ProductCategory.fruits, "")])];
     var repo = InMemoryRecipesRepository(recipes);
     getUserUseCase = GetAllRecipesUseCase(repo);
     observer = _Observer();
-    getUserUseCase.execute(observer, GetAllRecipesUseCaseParams([Product('banana', 1, ''), Product('milk', 1, '')], 1));
+    getUserUseCase.execute(observer, GetAllRecipesUseCaseParams([Product('banana', 1, ProductCategory.fruits, ''), Product('milk', 1, ProductCategory.dairy, '')], 1));
     while (!observer.status['progress'].contains('done')) {
       await Future.delayed(const Duration(seconds: 1));
     }

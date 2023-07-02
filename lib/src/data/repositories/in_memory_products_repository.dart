@@ -23,7 +23,7 @@ class InMemoryProductsRepository extends ProductsRepository {
     int index = products.indexWhere((element) => element.name == id);
     if (index == -1)
       return false;
-    products[index] = Product(products[index].name, newQuantity, products[index].image);
+    products[index] = Product(products[index].name, newQuantity, products[index].category, products[index].image);
     return true;
   }
 

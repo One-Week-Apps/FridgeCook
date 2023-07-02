@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:fridge_cook/src/app/SharedPreferencesKeys.dart';
+import 'package:fridge_cook/src/app/pages/loader/loader_view.dart';
 import 'package:fridge_cook/src/data/repositories/SharedPref.dart';
+import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:fridge_cook/src/domain/entities/recipe.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:fridge_cook/src/app/pages/recipes_details/recipes_details_view.dart';
 import 'package:fridge_cook/src/app/pages/products_listing/products_recipes_listing_view.dart';
@@ -23,7 +27,7 @@ Future<void> main() async {
   runApp(MyApp(tutorialCompleted));
 }
 
-const PrimaryColor = const Color(0xFFFFFFFF);
+const PrimaryColor = const Color.fromARGB(255, 223, 0, 26);
 
 class ColorModel with ChangeNotifier {
   void updateDisplay() {
@@ -50,10 +54,17 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primaryColor: PrimaryColor,
             primarySwatch: Colors.red,
-            fontFamily: 'Montserrat'),
+            fontFamily: 'DM Sans'),
         home: homeRoute,
         routes: {
+          OnboardingRoute.routeName: (context) => OnboardingRoute(),
           ProductsListingRoute.routeName: (context) => ProductsListingRoute(),
+          LoaderRoute.routeName: (context) {
+            final List<String> args = ModalRoute.of(context).settings.arguments;
+            final String title = args.first;
+            final String description = args.last;
+            return LoaderRoute(title, description);
+          },
           RecipesDetailsRoute.routeName: (context) {
             final Recipe recipe = ModalRoute.of(context).settings.arguments;
             return RecipesDetailsRoute(recipe); 

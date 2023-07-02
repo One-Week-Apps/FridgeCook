@@ -1,4 +1,5 @@
 import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:fridge_cook/src/domain/repositories/openai/completions_api.dart';
 import 'package:fridge_cook/src/domain/repositories/openai/create_image_api.dart';
 import 'package:fridge_cook/src/domain/repositories/product_fetcher.dart';
@@ -15,6 +16,6 @@ class RemoteProductFetcher extends ProductFetcher {
     }
 
     var imageUrl = await GenerationsApi.getForecast(id);
-    return Product(id, 1, imageUrl);
+    return Product(id, 1, ProductCategory.food, imageUrl);
   }
 }

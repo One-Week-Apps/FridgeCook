@@ -69,8 +69,30 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/animations/Onboarding_Slide_Left_Arrows_Animation.json
+    - assets/animations/Processing.json
+    
+    - assets/images/info.png
+    - assets/images/scan.png
+    - assets/images/filter.png
+    - assets/images/plus.png
+    - assets/images/my_products.png
+    - assets/images/cooking.png
+    - assets/images/my_recipes.png
+    - assets/images/vegetables.png
+    - assets/images/meat.png
+    - assets/images/fish.png
+    - assets/images/dairy.png
+    - assets/images/fruits.png
+    - assets/images/drinks.png
+    - assets/images/cereals.png
+    - assets/images/sugar.png
+    - assets/images/food.png
 
-    - assets/images/icon.png
+    - assets/images/clock.png
+    - assets/images/difficulty.png
+    - assets/images/people.png
+
+    - assets/icon/icon.png
     - assets/images/star_off.png
     - assets/images/star_on.png
     - assets/images/fire.png
@@ -120,6 +142,12 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
+    - family: DM Sans
+      fonts:
+        - asset: assets/fonts/DMSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/DMSans-Medium.ttf
+          weight: 500
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Black.ttf

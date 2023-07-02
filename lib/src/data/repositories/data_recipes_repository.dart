@@ -1,4 +1,5 @@
 import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/domain/entities/product_category.dart';
 
 import '../../domain/entities/recipe.dart';
 import '../../domain/repositories/recipes_repository.dart';
@@ -19,6 +20,7 @@ class DataRecipesRepository extends RecipesRepository {
           Product(
             "Orange",
             1,
+            ProductCategory.fruits,
             "https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg",
           ),
         ],

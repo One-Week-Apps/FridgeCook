@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_product_fetcher.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_products_repository.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
+import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:fridge_cook/src/domain/usecases/add_product_usecase.dart';
 
 void main() {
@@ -19,7 +20,7 @@ void main() {
       () async {
     AddProductUseCase getUserUseCase;
     _Observer observer;
-    var repo = InMemoryProductsRepository([Product("banana", 1, "")]);
+    var repo = InMemoryProductsRepository([Product("banana", 1, ProductCategory.fruits, "")]);
     var fetcher = InMemoryProductFetcher(null);
     getUserUseCase = AddProductUseCase(repo, fetcher);
     observer = _Observer();
@@ -54,7 +55,7 @@ void main() {
     AddProductUseCase getUserUseCase;
     _Observer observer;
     var repo = InMemoryProductsRepository([]);
-    var fetcher = InMemoryProductFetcher(Product("banana", 1, "test_image_url"));
+    var fetcher = InMemoryProductFetcher(Product("banana", 1, ProductCategory.fruits, "test_image_url"));
     getUserUseCase = AddProductUseCase(repo, fetcher);
     observer = _Observer();
     getUserUseCase.execute(observer, AddProductUseCaseParams('banana'));
