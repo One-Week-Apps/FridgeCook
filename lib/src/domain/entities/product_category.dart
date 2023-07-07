@@ -21,31 +21,31 @@ class ProductCategory {
   static ProductCategory fromName(String name) {
     ProductCategory category;
     switch (name.toLowerCase()) {
-      case 'Vegetables':
+      case 'vegetables':
       category = vegetables;
       break;
-      case 'Meat':
+      case 'meat':
       category = meat;
       break;
-      case 'Fish':
+      case 'fish':
       category = fish;
       break;
-      case 'Dairy':
+      case 'dairy':
       category = dairy;
       break;
-      case 'Fruits':
+      case 'fruits':
       category = fruits;
       break;
-      case 'Drinks':
+      case 'drinks':
       category = drinks;
       break;
-      case 'Cereals':
+      case 'cereals':
       category = cereals;
       break;
-      case 'Sugar':
+      case 'sugar':
       category = sugar;
       break;
-      case 'Food':
+      case 'food':
       category = food;
       break;
     }

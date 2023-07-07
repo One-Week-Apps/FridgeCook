@@ -194,10 +194,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   }
 
   Widget _categoryTableViewCell(int index, ProductCategory category) {
-    var thumbnailHeight = 56.0;
+    var thumbnailWidth = 56.0;
     var isSelected = _selectedProductCategoryIndex != index;
     
-    var view = Column(
+    var view = Row(children: [SizedBox(width: 20,), Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Spacer(flex: 2),
@@ -216,26 +216,29 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                     });
                   },
                   child: Container(
-                  color: Color(0xDF001B),
-                  height: thumbnailHeight,
+                  width: thumbnailWidth,
+                  height: thumbnailWidth,
                   decoration: BoxDecoration(
                     border: Border.all(color: isSelected ? Color(0x12DF001B) : Color.fromARGB(255, 223, 0, 26),),
                     borderRadius: BorderRadius.all(Radius.circular(14))
                   ),
-                  child: _makeCategoryImage(category.image),
+                  child: _makeCategoryImage(category.image),//Container(color: Colors.green, child: SizedBox(width: 56, height: 80,)),
                 )
                 ),
                 Spacer(flex: 1),
-                Text(category.name, textAlign: TextAlign.center,),
+                Text(category.name, textAlign: TextAlign.center, style: GoogleFonts.dmSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w100, color: Color.fromARGB(255, 128, 128, 128))),
                 Spacer(flex: 1),
-              ]);
+              ])]);
 
     return view;
   }
 
   Widget _makeCategoryImage(String name) {
-    return InkWell(
-      splashColor: Colors.white10,
+    return Image.network(name, width: 19, height: 19,);
+    /*return InkWell(
+      splashColor: Colors.black,
       child: Ink.image(
         fit: BoxFit.fitHeight,
         height: 19.0,
@@ -243,7 +246,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           name
         ),
       )
-    );
+    );*/
   }
 
   Widget _productTableViewCell(int index, Product product) {
@@ -364,7 +367,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
 
     var listingHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - 60 - 105;
 
-    if (controller.products.isEmpty) {
+    if (controller.products.isEmpty && _selectedProductCategoryIndex == -1) {
       Widget emptyProductsView = Container(padding: EdgeInsets.all(15), height: listingHeight, child: Text("Hum... 🤔\n\nIt looks like your fridge is empty for now... 👨‍🍳\n\nStart by adding some ingredients below!", style: TextStyle(fontSize: 17,)));
       return Center(child: Stack(children: [emptyProductsView/*, bottomOverlayView*/]));
     }
@@ -372,14 +375,14 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     var categoriesChildren = <Widget>[
       for (var i = 0 ; i < controller.productCategories.length ; i++) _categoryTableViewCell(i, controller.productCategories[i])
     ];
-    Widget categoriesListingView = Container(height: listingHeight, child: ListView(padding: const EdgeInsets.all(8), children: categoriesChildren));
+    Widget categoriesListingView = Container(width: MediaQuery.of(context).size.width, height: 100, child: ListView(physics: const AlwaysScrollableScrollPhysics(), scrollDirection: Axis.horizontal, padding: const EdgeInsets.all(8), children: categoriesChildren));
 
     var productsChildren = <Widget>[
       for (var i = 0 ; i < controller.products.length ; i++) _productTableViewCell(i, controller.products[i])
     ];
     Widget productsListingView = Container(height: listingHeight, child: ListView(padding: const EdgeInsets.all(8), children: productsChildren));
 
-    return Center(child: Stack(children: [categoriesListingView, Text(controller.productCategoryName(_selectedProductCategoryIndex)), productsListingView/*, bottomOverlayView*/]));
+    return Padding(padding: EdgeInsets.only(left: 24), child: Column(children: [categoriesListingView, Align(alignment: Alignment.centerLeft, child: Text(controller.productCategoryName(_selectedProductCategoryIndex), style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 4, 4, 21),),)), productsListingView]));//Center(child: Stack(children: [categoriesListingView, Text(controller.productCategoryName(_selectedProductCategoryIndex)), productsListingView/*, bottomOverlayView*/]));
   }
 
   Widget recipesListingView() {

@@ -14,6 +14,7 @@ class ProductsListingController extends Controller {
   List<ProductCategory> _categories = [];
   List<Product> _products = [];
   List<Product> _filteredProducts = [];
+  ProductCategory _filteredCategory;
   
   // data used by the View
   int get counter => _counter;
@@ -44,6 +45,7 @@ class ProductsListingController extends Controller {
     presenter.getAllProductsOnNext = (List<Product> products) {
       print(products.toString());
       _products = products;
+      filter(_filteredCategory);
       print("DEBUG_SESSION OK7");
       refreshUI();
     };
@@ -79,12 +81,19 @@ class ProductsListingController extends Controller {
     return _categories[index].name;
   }
   void filter(ProductCategory category) {
-    _filteredProducts = _products.where((product) => product.category.name == category.name).toList();
+    if (category.toString() == "null") {
+      _filteredCategory = null;
+      _filteredProducts = _products;
+    } else {
+      _filteredCategory = category;
+      _filteredProducts = _products.where((product) {
+        return product.category.name == category.name;
+    }).toList();
+    }
     refreshUI();
   }
   void disableFilters() {
-    _filteredProducts = _products;
-    refreshUI();
+    filter(null);
   }
   void addProduct(String value) => presenter.addProduct(value);
   void deleteProduct(String value) => presenter.deleteProduct(value);
