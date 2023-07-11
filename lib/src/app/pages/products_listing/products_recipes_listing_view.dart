@@ -196,6 +196,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   Widget _categoryTableViewCell(int index, ProductCategory category) {
     var thumbnailWidth = 56.0;
     var isSelected = _selectedProductCategoryIndex != index;
+    var productCountInCategory = controller.allProducts.where((e) => e.category == category).length;
     
     var view = Row(children: [SizedBox(width: 20,), Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -219,6 +220,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                   width: thumbnailWidth,
                   height: thumbnailWidth,
                   decoration: BoxDecoration(
+                    color: Color.fromRGBO(223, 0, 27, 0.07),
                     border: Border.all(color: isSelected ? Color(0x12DF001B) : Color.fromARGB(255, 223, 0, 26),),
                     borderRadius: BorderRadius.all(Radius.circular(14))
                   ),
@@ -226,7 +228,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                 )
                 ),
                 Spacer(flex: 1),
-                Text(category.name, textAlign: TextAlign.center, style: GoogleFonts.dmSans(
+                Text("${category.name}${productCountInCategory > 0 ?  " ($productCountInCategory)" : ""}", textAlign: TextAlign.center, style: GoogleFonts.dmSans(
                               fontSize: 11,
                               fontWeight: FontWeight.w100, color: Color.fromARGB(255, 128, 128, 128))),
                 Spacer(flex: 1),
@@ -250,70 +252,93 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   }
 
   Widget _productTableViewCell(int index, Product product) {
-    var thumbnailHeight = 100.0;
+    var width = 158.0;
+    var thumbnailHeight = 44.0;
     var thumbnail = makeZoomableImage(product.image, thumbnailHeight, context);
 
-    return InkWell(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: thumbnailHeight + 10,
-                  color: Colors.white,
-                  child: Column(
-                    children: <Widget>[
+    var canRemoveMore = product.quantity > 1;
+    var canAddMore = product.quantity < 9;
+    var lessQuantityUpdaterBackgroundColor = canRemoveMore ? Color.fromRGBO(223, 0, 27, 1) : Color.fromRGBO(223, 0, 27, 0.07);
+    var lessQuantityUpdaterForegroundColor = canRemoveMore ? Colors.white : Color.fromRGBO(223, 0, 27, 1);
+    var quantityUpdaterBackgroundColor = canAddMore ? Color.fromRGBO(223, 0, 27, 1) : Color.fromRGBO(223, 0, 27, 0.07);
+    var quantityUpdaterForegroundColor = canAddMore ? Colors.white : Color.fromRGBO(223, 0, 27, 1);
 
-                      // thumbnail,
-                      Row(
+    return InkWell(
+                child: Card(child: Container(
+                  width: width,
+                  height: 173,
+                  color: Colors.white,
+                  child: Stack(children: [Positioned(left: width / 2, child: Column(
                         children: <Widget>[
+                          SizedBox(height: 40),
+                          thumbnail,
+                          SizedBox(height: 18),
                           Text(product.name,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.dmSans(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w900)),
-                          Spacer(),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500, color: Color.fromRGBO(71, 72, 71, 0.96))),
+                          SizedBox(height: 13),
                           Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    IconButton(
+                                    InkWell(onTap: () {
+                                      if (canRemoveMore) {
+                                        controller.deleteOne(product.name);
+                                      }
+                                    }, child:
+                                    Container(decoration: BoxDecoration(
+                                      color: lessQuantityUpdaterBackgroundColor,//Color.fromRGBO(223, 0, 27, 0.07),
+                    //border: Border.all(color: Color.fromRGBO(223, 223, 223, 1),),
+                    borderRadius: BorderRadius.all(Radius.circular(11.5))
+                  ), width: 23, height: 23, child:
+                                    Text("-", textAlign: TextAlign.center, style: TextStyle(color: lessQuantityUpdaterForegroundColor)),/*IconButton(
+                                      iconSize: 10.0,
                                       icon: Icon(Icons.remove),
                                       onPressed: () {
                                         controller.deleteOne(product.name);
                                       },
-                                    ),
-                                    Text(product.quantity.toString()),
-                                    IconButton(
+                                    )*/)),
+                                    SizedBox(width: 8,),
+                                    Text(product.quantity.toString(), style: GoogleFonts.dmSans(fontWeight: FontWeight.w500, fontSize: 14)),
+                                    SizedBox(width: 8,),
+                                    InkWell(onTap: () {
+                                      if (canAddMore) {
+                                        controller.addProduct(product.name);
+                                      }
+                                    }, child:
+                                    Container(decoration: BoxDecoration(
+                                      color: quantityUpdaterBackgroundColor,//Color.fromRGBO(223, 0, 27, 0.07),
+                    //border: Border.all(color: Color.fromRGBO(223, 223, 223, 1),),
+                    borderRadius: BorderRadius.all(Radius.circular(11.5))
+                  ), width: 23, height: 23, child:
+                                    Text("+", textAlign: TextAlign.center, style: TextStyle(color: quantityUpdaterForegroundColor)),//Color.fromRGBO(223, 0, 27, 1))),
+                                    /*IconButton(
+                                      iconSize: 10.0,
                                       icon: Icon(Icons.add),
                                       onPressed: () {
                                         controller.addProduct(product.name);
                                       },
-                                    ),
+                                    )*/)),
                                   ],
                                 ),
-                          SizedBox(width: 50),
-                          thumbnail,
-                          SizedBox(width: 50),
+                          SizedBox(height: 50),
+              ],
+                      )), Positioned(top: 14, right: 0.105 * width, child: Container(decoration: BoxDecoration(
+                    border: Border.all(color: Color.fromRGBO(223, 223, 223, 1),),
+                    borderRadius: BorderRadius.all(Radius.circular(6))
+                  ), width: 28, height: 28, child: 
                           IconButton(
                             icon: Image.asset(CustomImages.trash),
                             onPressed: () {
                               print("deleting product $index");
                               controller.deleteProduct(product.name);
                             },
-                          ),
-              ],
-                      ),
-                      SizedBox(height: 5),
-                      const Divider(
-            height: 1,
-            thickness: 0.5,
-            indent: 0,
-            endIndent: 0,
-            color: Colors.grey,
-          ),
-                    ],
-                  ),
-                ),
-                onTap: () {
+                          ))),]),
+                )),
+                /*onTap: () {
                   print("image tapped");
-                },
+                },*/
               );
   }
 
@@ -365,7 +390,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
       child: Container(color: Colors.white, child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16), child: textField,)),
     );*/
 
-    var listingHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - 60 - 105;
+    var listingHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - 60 - 135;
 
     if (controller.products.isEmpty && _selectedProductCategoryIndex == -1) {
       Widget emptyProductsView = Container(padding: EdgeInsets.all(15), height: listingHeight, child: Text("Hum... 🤔\n\nIt looks like your fridge is empty for now... 👨‍🍳\n\nStart by adding some ingredients below!", style: TextStyle(fontSize: 17,)));
@@ -380,7 +405,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     var productsChildren = <Widget>[
       for (var i = 0 ; i < controller.products.length ; i++) _productTableViewCell(i, controller.products[i])
     ];
-    Widget productsListingView = Container(height: listingHeight, child: ListView(padding: const EdgeInsets.all(8), children: productsChildren));
+    Widget productsListingView = Container(height: listingHeight, child: GridView.count(crossAxisCount: 2, padding: const EdgeInsets.all(8), children: productsChildren));
 
     return Padding(padding: EdgeInsets.only(left: 24), child: Column(children: [categoriesListingView, Align(alignment: Alignment.centerLeft, child: Text(controller.productCategoryName(_selectedProductCategoryIndex), style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 4, 4, 21),),)), productsListingView]));//Center(child: Stack(children: [categoriesListingView, Text(controller.productCategoryName(_selectedProductCategoryIndex)), productsListingView/*, bottomOverlayView*/]));
   }

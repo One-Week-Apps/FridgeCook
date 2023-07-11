@@ -20,6 +20,7 @@ class ProductsListingController extends Controller {
   int get counter => _counter;
   List<ProductCategory> get productCategories => _categories;
   List<Product> get products => _filteredProducts;
+  List<Product> get allProducts => _products;
   
   final ProductsListingPresenter presenter;
   // Presenter should always be initialized this way
