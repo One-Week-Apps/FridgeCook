@@ -87,6 +87,7 @@ flutter:
     - assets/images/cereals.png
     - assets/images/sugar.png
     - assets/images/food.png
+    - assets/images/close.png
 
     - assets/images/clock.png
     - assets/images/difficulty.png

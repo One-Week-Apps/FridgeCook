@@ -25,6 +25,8 @@ class CustomImages {
   static const cereals = _imagesPrefix + "cereals" + _extension;
   static const sugar = _imagesPrefix + "sugar" + _extension;
   static const food = _imagesPrefix + "food" + _extension;
+  
+  static const close = _imagesPrefix + "close" + _extension;
 
   static const clock = _imagesPrefix + "clock" + _extension;
   static const difficulty = _imagesPrefix + "difficulty" + _extension;

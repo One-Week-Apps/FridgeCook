@@ -35,13 +35,15 @@ class DialogUtils {
                     color: PrimaryColor.withAlpha(18),
                     border: Border.all(color: Color.fromARGB(18, 223, 0, 26),),
                     borderRadius: BorderRadius.all(Radius.circular(10))
-                  ), width: 125, height: 40, padding: EdgeInsets.all(8),
+                  ), width: (56 + name.toString().length * 8).toDouble(), height: 50, padding: EdgeInsets.only(left: 8, top: 5, right: 0, bottom: 5),
         child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(name, style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 13, color: PrimaryColor,),),
+                                    Spacer(flex: 1,),
                                     IconButton(
-                                      icon: Icon(Icons.close, color: PrimaryColor),
+                                      color: const Color.fromARGB(255, 223, 0, 27),
+                                      icon: ImageIcon(AssetImage(CustomImages.close)),//Icon(Icons.close, color: PrimaryColor)),
                                       onPressed: () {
                                         print("DEBUG_SESSION remove tag: " + name);
                                       },
@@ -61,23 +63,7 @@ class DialogUtils {
       @required Function removeTagFunction,
       @required ListStringVoidFunc okBtnFunction}) {
 
-        var textField = TextFormField(
-      maxLength: 100,
-      controller: _productController,
-      onFieldSubmitted: (value) {
-        print("Field submitted ! " + value);
-        _tags.add(value);
-        _productController.text = "";
-        addTagFunction();
-        //controller.addProduct(value);
-      }, decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Enter ingredients...',
-    ));
-
-    var tagView = Wrap(spacing: 8, children: [for (var tag in _tags) _makeTag(tag),],);
-
-var goToNextAnimationView = TextButton(
+var addIngredientsView = TextButton(
                   style: TextButton.styleFrom(
                     fixedSize: const Size(300, 50),
                     foregroundColor: Colors.white,
@@ -94,7 +80,7 @@ var goToNextAnimationView = TextButton(
                 
     showDialog(
         context: context,
-        builder: (_) {
+        builder: (BuildContext context) {
           return AlertDialog(
             icon: Container(
           alignment: FractionalOffset.topRight, child: InkWell(onTap:() {
@@ -103,19 +89,44 @@ var goToNextAnimationView = TextButton(
             title: Text(title),
             //title: Row(
             //  mainAxisAlignment: MainAxisAlignment.center, children: [Text(title)/*, _getCloseButton(context),*/]),
-            content: Column(
+            content: 
+            
+            
+            StatefulBuilder(builder: ((BuildContext context, StateSetter setState) {
+              return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 //_getCloseButton(context),
-                textField,
-                tagView,
-              ]),
-              actionsAlignment: MainAxisAlignment.end,
+                TextFormField(
+      maxLength: 100,
+      controller: _productController,
+      onFieldSubmitted: (value) {
+        print("Field submitted ! " + value);
+        _tags.add(value);
+        _productController.text = "";
+        setState((){});
+        addTagFunction();
+        //controller.addProduct(value);
+      }, decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Enter ingredients...',
+    )),
+                Wrap(spacing: 8, runSpacing: 8, children: [for (var tag in _tags) _makeTag(tag),],),
+              ]);
+            })
+            
+             
+              
+              
+          )
+              
+              ,
+              actionsAlignment: MainAxisAlignment.center,
             actions: <Widget>[
               /*ElevatedButton(
                 child: Text(okBtnText, style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white,),),
                 onPressed: okBtnFunction,
-              )*/goToNextAnimationView,
+              )*/addIngredientsView,
               /*ElevatedButton(
                   child: Text(cancelBtnText),
                   onPressed: () => Navigator.pop(context))*/
@@ -458,7 +469,9 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           okBtnText: "Add ingredients",
           addTagFunction: () {
             print("DEBUG_SESSION addTagFunction");
-            setState((){});
+            setState((){
+              //refreshCount += 1;
+            });
           },
           removeTagFunction: () => setState((){}),
           okBtnFunction: addProducts,
