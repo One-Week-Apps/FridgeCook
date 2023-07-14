@@ -18,8 +18,12 @@ class ProductCategory {
   static const sugar = const ProductCategory._internal('Sugar', CustomImages.sugar);
   static const food = const ProductCategory._internal('Food', CustomImages.food);
 
+  static List<String> getValues() {
+    return ["vegetables", "meat", "fish", "dairy", "fruits", "drinks", "cereals", "sugar"];
+  }
+
   static ProductCategory fromName(String name) {
-    ProductCategory category;
+    ProductCategory category = food;
     switch (name.toLowerCase()) {
       case 'vegetables':
       category = vegetables;

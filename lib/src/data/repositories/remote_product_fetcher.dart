@@ -16,8 +16,12 @@ class RemoteProductFetcher extends ProductFetcher {
       return null;
     }
 
+    String categoryString = await CompletionsApi.getCategory(id, ProductCategory.getValues());
+    print("DEBUG_SESSION Found category $categoryString");
+    ProductCategory category = ProductCategory.fromName(categoryString);
+
     print("DEBUG_SESSION OK1");
     var imageUrl = await GenerationsApi.getForecast(id);
-    return Product(id, 1, ProductCategory.food, imageUrl);
+    return Product(id, 1, category, imageUrl);
   }
 }

@@ -74,6 +74,8 @@ var addIngredientsView = TextButton(
                   onPressed: () {
                     //nextPage();
                     okBtnFunction(_tags);
+                    // clear tags once we submit ingredients
+                    _tags = [];
                   },
                   child: Text(okBtnText),
                 );
