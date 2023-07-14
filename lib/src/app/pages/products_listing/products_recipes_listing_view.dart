@@ -175,27 +175,41 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     );
 
     return InkWell(
-      child: Container(
+      child: Card(child: Container(
+        padding: EdgeInsets.only(left: 24),
         width: 356,
         height: thumbnail.height,
         color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            Row(
+        child: Row(
               children: <Widget>[
-                Text('\n' + recipe.name,
+
+                Column(crossAxisAlignment: CrossAxisAlignment.start , children: [
+                  //Row(children: [
+                  Text('\n' + recipe.name,
+                  textAlign: TextAlign.left,
                     style: GoogleFonts.dmSans(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900)),
+                        color: Color.fromRGBO(17, 58, 17, 1),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10,),
+                        ProductsDetailsState.makeRecipeSpecifications(),
+                        //]),
+
+                  // ingredients ...
+
+                ],),
+
+                
+
+
+
                 Spacer(
                   flex: 1,
                 ),
                 thumbnail,
               ],
             ),
-          ],
-        ),
-      ),
+      )),
     onTap: () {
       Navigator.pushNamed(
         context, 
@@ -508,7 +522,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
       appBar: AppBar(
         //centerTitle: false,
         title: Text(
-          _selectedIndex == 0 ? 'What\'s in my fridge?' : 'Recipes suggestions 👨‍🍳',
+          _selectedIndex == 0 ? 'What\'s in my fridge?' : 'Recipes suggestions',
           style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black),
         ),
         actions: [

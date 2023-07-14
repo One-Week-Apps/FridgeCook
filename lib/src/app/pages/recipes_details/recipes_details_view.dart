@@ -44,11 +44,29 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
                     
       SizedBox(width: 14,),
       
-      Container(color: Colors.transparent, height: 50, width: MediaQuery.of(context).size.width - 75, child: Text(
+      Container(padding: EdgeInsets.only(top: 10), color: Colors.transparent, height: 50, width: MediaQuery.of(context).size.width - 75, child: Text(
       direction,
-      style: GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w500, color: grey))
+      style: GoogleFonts.dmSans(backgroundColor: grey, fontSize: 14, fontWeight: FontWeight.w500, color: grey))
 
     )]));
+  }
+
+  static Widget makeRecipeSpecifications() {
+    var grey = Color.fromARGB(153, 71, 72, 71);
+    
+    return Row(children: [
+                      ImageIcon(AssetImage(CustomImages.clock), color: grey,),
+                      Text("Rapido",  style: GoogleFonts.dmSans(
+                                fontSize: 14, fontWeight: FontWeight.w500, color: grey),),
+                      SizedBox(width: 18),
+                      ImageIcon(AssetImage(CustomImages.people), color: grey,),
+                      Text("1 Serving", style: GoogleFonts.dmSans(
+                                fontSize: 14, fontWeight: FontWeight.w500, color: grey),),
+                      SizedBox(width: 18),
+                      ImageIcon(AssetImage(CustomImages.difficulty), color: Colors.grey,),
+                      Text("Easy", style: GoogleFonts.dmSans(
+                                fontSize: 14, fontWeight: FontWeight.w500, color: grey),),
+                    ]);
   }
 
   @override
@@ -181,19 +199,7 @@ Transform.translate(
                             style: GoogleFonts.dmSans(
                                 fontSize: 22, fontWeight: FontWeight.bold))),
                     SizedBox(height: 12,),
-                    Row(children: [
-                      ImageIcon(AssetImage(CustomImages.clock), color: grey,),
-                      Text("Rapido",  style: GoogleFonts.dmSans(
-                                fontSize: 14, fontWeight: FontWeight.w500, color: grey),),
-                      SizedBox(width: 18),
-                      ImageIcon(AssetImage(CustomImages.people), color: grey,),
-                      Text("1 Serving", style: GoogleFonts.dmSans(
-                                fontSize: 14, fontWeight: FontWeight.w500, color: grey),),
-                      SizedBox(width: 18),
-                      ImageIcon(AssetImage(CustomImages.difficulty), color: Colors.grey,),
-                      Text("Easy", style: GoogleFonts.dmSans(
-                                fontSize: 14, fontWeight: FontWeight.w500, color: grey),),
-                    ]),
+                    makeRecipeSpecifications(),
                     SizedBox(height: 30,),
                     Align(alignment: Alignment.centerLeft, child: Text("Ingredients", textAlign: TextAlign.left, style: GoogleFonts.dmSans(
                                 fontSize: 16, fontWeight: FontWeight.bold))),
