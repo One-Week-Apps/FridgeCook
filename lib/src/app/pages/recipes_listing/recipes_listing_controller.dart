@@ -28,15 +28,8 @@ class RecipesListingController extends Controller {
       
       // As the same view is used for both products and recipes screen,
       // we call refresh UI on the products controller which is binded to the view
-      delay().then((val) {
         productsListingController.refreshUI();
-      });
     };
-  }
-
-  Future<void> delay() async {
-     await new Future.delayed(const Duration(seconds: 3));
-     return;
   }
 
   void getAllRecipes(List<Product> products) => presenter.getAllRecipes(products);
