@@ -68,7 +68,6 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   assets:
-    - assets/animations/Onboarding_Slide_Left_Arrows_Animation.json
     - assets/animations/Processing.json
     
     - assets/images/info.png
@@ -94,29 +93,11 @@ flutter:
     - assets/images/people.png
 
     - assets/icon/icon.png
-    - assets/images/star_off.png
-    - assets/images/star_on.png
-    - assets/images/fire.png
-    - assets/images/cup.png
-    - assets/images/trophy.png
-    - assets/images/stats.png
     - assets/images/onboarding_scan.png
     - assets/images/onboarding_listing.png
     - assets/images/onboarding_recipes_listing.png
     - assets/images/onboarding_recipe_details.png
-    - assets/images/unlocked.png
-    - assets/images/placeholder_1.png
-    - assets/images/placeholder_2.png
-    - assets/images/like.png
-    - assets/images/dislike.png
-    - assets/images/achievements_view_outer.png
-    - assets/images/achievements_background.png
-    - assets/images/achievements_background_unlocked.png
-    - assets/images/play_button.png
-    - assets/images/salsa_coach_watch_1.png
-    - assets/images/salsa_coach_watch_2.png
     - assets/images/trash.png
-    - assets/images/achievement_trophy.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

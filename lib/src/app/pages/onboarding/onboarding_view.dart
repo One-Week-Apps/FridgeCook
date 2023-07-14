@@ -33,8 +33,7 @@ class OnboardingRoute extends StatelessWidget {
                     nextPage();
                   },
                   child: const Text('Next'),
-                );/*Lottie.asset(
-        'assets/animations/Onboarding_Slide_Left_Arrows_Animation.json');*/
+                );
     var closeView = TextButton(
       style: TextButton.styleFrom(
         foregroundColor: Color.fromARGB(102, 71, 72, 71),
