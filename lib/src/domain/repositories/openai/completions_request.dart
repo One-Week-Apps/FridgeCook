@@ -31,10 +31,10 @@ class CompletionsRequest {
   final String stop;
 
   CompletionsRequest({
-    /*required */this.model,
-    /*required */this.prompt,
-    /*required */this.maxTokens,
-    /*required */this.temperature,
+    this.model,
+    this.prompt,
+    this.maxTokens,
+    this.temperature,
     this.topP,
     this.n,
     this.stream,

@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
 
 class Recipe {

@@ -42,16 +42,16 @@ class CompletionsResponse {
   final List<String> completions;
 
   const CompletionsResponse({
-    /*required */this.id,
-    /*required */this.object,
-    /*required */this.created,
-    /*required */this.model,
-    /*required */this.choices,
-    /*required */this.usage,
-    /*required */this.promptTokens,
-    /*required */this.completionTokens,
-    /*required */this.totalTokens,
-    /*required */this.firstCompletion,
+    this.id,
+    this.object,
+    this.created,
+    this.model,
+    this.choices,
+    this.usage,
+    this.promptTokens,
+    this.completionTokens,
+    this.totalTokens,
+    this.firstCompletion,
     this.completions,
   });
 
@@ -68,7 +68,7 @@ class CompletionsResponse {
     var choices = responseBody['choices'];
 
     // Get the text for the different completions
-    print("DEBUG_SESSION choices = " + choices.runtimeType.toString());
+    print("choices = " + choices.runtimeType.toString());
 
     List<String> completions = [];
     for (var choice in choices) {

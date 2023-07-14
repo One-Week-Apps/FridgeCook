@@ -10,17 +10,13 @@ class SharedPreferencesProductRepository extends ProductsRepository {
 
   @override
   Future<bool> add(Product product) async {
-    print("DEBUG_SESSION OK3d1");
     int productCount = await getProductsCount();
     productCount++;
     await _sharedPref.save(SharedPreferencesKeys.productCount, productCount);
-    print("DEBUG_SESSION OK3d2");
 
     var key = _makeProductKey(productCount);
     await _sharedPref.save(key, product.toJson());
-    print("DEBUG_SESSION OK3d3");
 
-    print("DEBUG_SESSION OK3dEND");
     return true;
   }
 
@@ -41,7 +37,6 @@ class SharedPreferencesProductRepository extends ProductsRepository {
         var prod = Product.fromJson(prodJson);
         await _sharedPref.remove(key);
         
-        print("DEBUG_SESSION HEIDI[$id], CANDIDATE = $i $key => $prodJson ${prod.name}");
         if (prod.name == id) {
           await _sharedPref.remove(key);
           await _sharedPref.save(SharedPreferencesKeys.productCount, productCount - 1);

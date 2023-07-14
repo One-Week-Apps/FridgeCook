@@ -53,7 +53,7 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
 
   static Widget makeRecipeSpecifications() {
     var grey = Color.fromARGB(153, 71, 72, 71);
-    
+
     return Row(children: [
                       ImageIcon(AssetImage(CustomImages.clock), color: grey,),
                       Text("Rapido",  style: GoogleFonts.dmSans(
@@ -71,8 +71,7 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
 
   @override
   Widget build(BuildContext context) {
-    var recipe = this.widget.recipe;//Recipe("Sample recipe", ["1 apple", "1 sugar"], ["Take an apple", "Take some sugar"], Image.network("https://media.istockphoto.com/id/184276818/fr/photo/pomme-rouge.jpg?s=612x612&w=0&k=20&c=yk9viCWt8_VHAvSvzPuqZI-A79xkestBMyCf1AEyhrc=", width: 200, height: 200), []);//this.widget.recipe;
-    print("Building recipe: $recipe");
+    var recipe = this.widget.recipe;
 
     return Scaffold(
       floatingActionButton: Container(padding: EdgeInsets.all(32), child: 
@@ -98,73 +97,6 @@ class ProductsDetailsState extends State<RecipesDetailsRoute> {
       
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      //backgroundColor: Colors.transparent,
-      /*appBar: /*PreferredSize(
-          preferredSize: Size.fromHeight(118.0), 
-          
-          child: */AppBar(
-            toolbarHeight: 118.0,
-            leadingWidth: 56,
-            leading: Transform.translate(
-          offset: Offset(34, 0), 
-          child: 
-        
-        
-        
-        Container(
-          constraints: BoxConstraints(maxWidth: 28.0 * 2),
-          width: 28.0 * 2,
-          height: 28.0 * 2,
-          decoration: BoxDecoration(
-                    color: Color.fromARGB(77, 0, 0, 0),
-                    borderRadius: BorderRadius.circular(28)
-                  ),
-          child: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white,),
-          onPressed: () {
-            Navigator.pop(context);
-          },),
-        ),
-
-        ),
-        backgroundColor: Colors.transparent,
-       //leading:
-
-       // Transform.translate(
-        //  offset: Offset(34, 0), 
-       //   child: 
-        
-        
-       // Container(
-      //    height: 28.0 * 2,
-       //   decoration: BoxDecoration(
-       //             color: Color.fromARGB(77, 0, 0, 0),
-       //             borderRadius: BorderRadius.circular(28)
-       //           ),
-        //  child: IconButton(
-        //  icon: Icon(Icons.arrow_back, color: Colors.white,),
-        //  onPressed: () {
-        //    Navigator.pop(context);
-       //   },),
-        //),
-
-        //),
-        
-        
-
-
-
-        elevation: 0,
-        //leadingWidth: 100,
-        //centerTitle: true,
-        //titleSpacing: 0,
-        //title: Text(
-        //  recipe.name + ' 🧑‍🍳',
-        //  style: GoogleFonts.dmSans(fontSize: 30),
-        //),
-      ),//),
-
-      */
       body: SingleChildScrollView(
         child: SizedBox(
                         height: MediaQuery.of(context).size.height * 2,
@@ -216,12 +148,6 @@ Transform.translate(
                     Column(children: [
                       for (var i = 0; i < recipe.directions.length; i++) 
                       _makeDirection(i, recipe.directions[i], context)],),
-                    // Spacer(flex: 1),
-                    // Row(children: [ Text("Hey")/*for (var ingredient in recipe.ingredients) Text('\u2022 ' + ingredient)*/]),
-                    // Spacer(
-                    //   flex: 1
-                    //   ),
-                    // Row(children: [ for (var i = 0; i < recipe.directions.length; i++) Text(i.toString() + '. ' + recipe.directions[i])])
                   ]))
             ],
           ),
@@ -230,15 +156,6 @@ Transform.translate(
             Spacer(
               flex: 10,
             ),
-      //       Container(
-      // alignment: Alignment.bottomCenter,
-      // child: InkWell(
-      //     child: recipe.image,
-      // ),
-      //       ),
-      //       Spacer(
-      //         flex: MediaQuery.of(context).size.height == 640 ? 1 : 15,
-      //       ),
           ]),
         ),
         ),

@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:fridge_cook/src/app/CustomImages.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:oktoast/oktoast.dart';
-
 import 'products_listing_presenter.dart';
-
-import 'package:fridge_cook/main.dart';
 
 class ProductsListingController extends Controller {
   int _counter = 0;
@@ -47,15 +42,12 @@ class ProductsListingController extends Controller {
       print(products.toString());
       _products = products;
       filter(_filteredCategory);
-      print("DEBUG_SESSION OK7");
       refreshUI();
     };
 
     presenter.addProductOnNext = (bool isAdded) {
-      print("DEBUG_SESSION OK3d");
       if (isAdded) {
         // as a mutation occured products list must be updated
-        print("DEBUG_SESSION OK6");
         this.getAllProducts();
       } else {
         showToast("Sorry, we cannot add this ingredient...");
@@ -97,12 +89,13 @@ class ProductsListingController extends Controller {
     filter(null);
   }
   void addProduct(String value) => presenter.addProduct(value);
+  bool canAddMore(Product product) => product.quantity < 9;
+  bool canRemoveMore(Product product) => product.quantity > 1;
   void deleteProduct(String value) => presenter.deleteProduct(value);
   void deleteOne(String value) => presenter.deleteOne(value);
 
   @override
   void onResumed() {
-    print("On resumed");
     super.onResumed();
   }
 

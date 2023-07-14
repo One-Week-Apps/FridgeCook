@@ -2,7 +2,6 @@ import 'package:fridge_cook/src/domain/entities/product_category.dart';
 
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/products_repository.dart';
-import 'package:flutter/cupertino.dart';
 
 class DataProductsRepository extends ProductsRepository {
   List<Product> products;

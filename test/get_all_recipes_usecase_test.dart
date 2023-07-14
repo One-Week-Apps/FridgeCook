@@ -1,6 +1,5 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fridge_cook/src/data/repositories/in_memory_products_repository.dart';
 import 'package:fridge_cook/src/data/repositories/in_memory_recipes_repository.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/entities/product_category.dart';

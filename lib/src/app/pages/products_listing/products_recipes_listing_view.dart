@@ -44,9 +44,8 @@ class DialogUtils {
                                     Spacer(flex: 1,),
                                     IconButton(
                                       color: const Color.fromARGB(255, 223, 0, 27),
-                                      icon: ImageIcon(AssetImage(CustomImages.close)),//Icon(Icons.close, color: PrimaryColor)),
+                                      icon: ImageIcon(AssetImage(CustomImages.close)),
                                       onPressed: () {
-                                        print("DEBUG_SESSION remove tag: " + name);
                                         removeTagFunction(name);
                                       },
                                     ),
@@ -59,8 +58,6 @@ class DialogUtils {
       {@required String title, 
       String okBtnText = "Ok",
       String cancelBtnText = "Cancel",
-      @required Function addTagFunction,
-      @required StringVoidFunc removeTagFunction,
       @required ListStringVoidFunc okBtnFunction}) {
 
 var addIngredientsView = TextButton(
@@ -87,10 +84,8 @@ var addIngredientsView = TextButton(
             icon: Container(
           alignment: FractionalOffset.topRight, child: InkWell(onTap:() {
             Navigator.pop(context);
-          }, child: Icon(Icons.close))),//_getCloseButton(context),
+          }, child: Icon(Icons.close))),
             title: Text(title),
-            //title: Row(
-            //  mainAxisAlignment: MainAxisAlignment.center, children: [Text(title)/*, _getCloseButton(context),*/]),
             content: 
             
             
@@ -98,16 +93,13 @@ var addIngredientsView = TextButton(
               return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                //_getCloseButton(context),
                 TextFormField(
       maxLength: 100,
       controller: _productController,
       onFieldSubmitted: (value) {
-        print("Field submitted ! " + value);
         _tags.add(value);
         _productController.text = "";
         setState((){});
-        addTagFunction();
       }, decoration: const InputDecoration(
               border: UnderlineInputBorder(),
               labelText: 'Enter ingredients...',
@@ -115,7 +107,6 @@ var addIngredientsView = TextButton(
                 Wrap(spacing: 8, runSpacing: 8, children: [for (var tag in _tags) _makeTag(tag, (String value) {
             _tags.remove(value);
              setState((){});
-             removeTagFunction(value);     
             }),],),
               ]);
             })
@@ -128,13 +119,7 @@ var addIngredientsView = TextButton(
               ,
               actionsAlignment: MainAxisAlignment.center,
             actions: <Widget>[
-              /*ElevatedButton(
-                child: Text(okBtnText, style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white,),),
-                onPressed: okBtnFunction,
-              )*/addIngredientsView,
-              /*ElevatedButton(
-                  child: Text(cancelBtnText),
-                  onPressed: () => Navigator.pop(context))*/
+              addIngredientsView,
             ],
           );
         });
@@ -168,7 +153,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
 
   Widget _recipeTableViewCell(int index, Recipe item) {
     var recipe = item;
-    print("recipe[${index.toString()}] = $recipe");
     var thumbnail = CachedNetworkImage(
       imageUrl: recipe.image,
       placeholder: (context, url) => CircularProgressIndicator(),
@@ -229,7 +213,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                 Spacer(flex: 2),
                 InkWell(
                   onTap:() {
-                    print("selected category index: $index");
                     setState(() {
                       if (index == _selectedProductCategoryIndex) {
                         _selectedProductCategoryIndex = -1;
@@ -249,7 +232,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                     border: Border.all(color: isSelected ? Color(0x12DF001B) : Color.fromARGB(255, 223, 0, 26),),
                     borderRadius: BorderRadius.all(Radius.circular(14))
                   ),
-                  child: _makeCategoryImage(category.image),//Container(color: Colors.green, child: SizedBox(width: 56, height: 80,)),
+                  child: Image.network(category.image, width: 19, height: 19,),
                 )
                 ),
                 Spacer(flex: 1),
@@ -262,34 +245,19 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     return view;
   }
 
-  Widget _makeCategoryImage(String name) {
-    return Image.network(name, width: 19, height: 19,);
-    /*return InkWell(
-      splashColor: Colors.black,
-      child: Ink.image(
-        fit: BoxFit.fitHeight,
-        height: 19.0,
-        image: AssetImage(
-          name
-        ),
-      )
-    );*/
-  }
-
   Widget _productTableViewCell(int index, Product product) {
     var width = 158.0;
     var thumbnailHeight = 44.0;
     var thumbnail = makeZoomableImage(product.image, thumbnailHeight, context);
 
-    var canRemoveMore = product.quantity > 1;
-    var canAddMore = product.quantity < 9;
+    var canRemoveMore = controller.canRemoveMore(product);
+    var canAddMore = controller.canAddMore(product);
     var lessQuantityUpdaterBackgroundColor = canRemoveMore ? Color.fromRGBO(223, 0, 27, 1) : Color.fromRGBO(223, 0, 27, 0.07);
     var lessQuantityUpdaterForegroundColor = canRemoveMore ? Colors.white : Color.fromRGBO(223, 0, 27, 1);
     var quantityUpdaterBackgroundColor = canAddMore ? Color.fromRGBO(223, 0, 27, 1) : Color.fromRGBO(223, 0, 27, 0.07);
     var quantityUpdaterForegroundColor = canAddMore ? Colors.white : Color.fromRGBO(223, 0, 27, 1);
 
-    return InkWell(
-                child: Card(child: Container(
+    return Card(child: Container(
                   width: width,
                   height: 173,
                   color: Colors.white,
@@ -305,7 +273,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                               fontWeight: FontWeight.w500, color: Color.fromRGBO(71, 72, 71, 0.96))),
                           SizedBox(height: 13),
                           Row(
-                                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     InkWell(onTap: () {
                                       if (canRemoveMore) {
@@ -313,17 +280,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                                       }
                                     }, child:
                                     Container(decoration: BoxDecoration(
-                                      color: lessQuantityUpdaterBackgroundColor,//Color.fromRGBO(223, 0, 27, 0.07),
-                    //border: Border.all(color: Color.fromRGBO(223, 223, 223, 1),),
+                                      color: lessQuantityUpdaterBackgroundColor,
                     borderRadius: BorderRadius.all(Radius.circular(11.5))
                   ), width: 23, height: 23, child:
-                                    Text("-", textAlign: TextAlign.center, style: TextStyle(color: lessQuantityUpdaterForegroundColor)),/*IconButton(
-                                      iconSize: 10.0,
-                                      icon: Icon(Icons.remove),
-                                      onPressed: () {
-                                        controller.deleteOne(product.name);
-                                      },
-                                    )*/)),
+                                    Text("-", textAlign: TextAlign.center, style: TextStyle(color: lessQuantityUpdaterForegroundColor)),)),
                                     SizedBox(width: 8,),
                                     Text(product.quantity.toString(), style: GoogleFonts.dmSans(fontWeight: FontWeight.w500, fontSize: 14)),
                                     SizedBox(width: 8,),
@@ -333,18 +293,11 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                                       }
                                     }, child:
                                     Container(decoration: BoxDecoration(
-                                      color: quantityUpdaterBackgroundColor,//Color.fromRGBO(223, 0, 27, 0.07),
-                    //border: Border.all(color: Color.fromRGBO(223, 223, 223, 1),),
+                                      color: quantityUpdaterBackgroundColor,
                     borderRadius: BorderRadius.all(Radius.circular(11.5))
                   ), width: 23, height: 23, child:
-                                    Text("+", textAlign: TextAlign.center, style: TextStyle(color: quantityUpdaterForegroundColor)),//Color.fromRGBO(223, 0, 27, 1))),
-                                    /*IconButton(
-                                      iconSize: 10.0,
-                                      icon: Icon(Icons.add),
-                                      onPressed: () {
-                                        controller.addProduct(product.name);
-                                      },
-                                    )*/)),
+                                    Text("+", textAlign: TextAlign.center, style: TextStyle(color: quantityUpdaterForegroundColor)),
+                                    )),
                                   ],
                                 ),
                           SizedBox(height: 50),
@@ -356,15 +309,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                           IconButton(
                             icon: Image.asset(CustomImages.trash),
                             onPressed: () {
-                              print("deleting product $index");
                               controller.deleteProduct(product.name);
                             },
                           ))),]),
-                )),
-                /*onTap: () {
-                  print("image tapped");
-                },*/
-              );
+                ));
   }
 
   Widget makeZoomableImage(String name, double width, BuildContext context) {
@@ -382,7 +330,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           errorWidget: (context, url, error) => Icon(null),
           width: width,
           height: width,
-        )//Image.network(name, width: width, height: height),
+        )
     );
   }
 
@@ -393,33 +341,14 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
   int _selectedProductCategoryIndex = -1;
   @override
   Widget get view => buildPage();
-  
-  //final _productController = TextEditingController();
 
   Widget productsListingView(ProductsListingController controller) {
-
-    /*var textField = TextFormField(
-      maxLength: 10,
-      controller: _productController,
-      onFieldSubmitted: (value) {
-        print("Field submitted ! " + value);
-        _productController.text = "";
-        controller.addProduct(value);
-      }, decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'New ingredient',
-    ));
-
-    Widget bottomOverlayView = Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(color: Colors.white, child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16), child: textField,)),
-    );*/
 
     var listingHeight = MediaQuery.of(context).size.height - AppBar().preferredSize.height - 60 - 135;
 
     if (controller.products.isEmpty && _selectedProductCategoryIndex == -1) {
       Widget emptyProductsView = Container(padding: EdgeInsets.all(15), height: listingHeight, child: Text("Hum... 🤔\n\nIt looks like your fridge is empty for now... 👨‍🍳\n\nStart by adding some ingredients below!", style: TextStyle(fontSize: 17,)));
-      return Center(child: Stack(children: [emptyProductsView/*, bottomOverlayView*/]));
+      return Center(child: Stack(children: [emptyProductsView]));
     }
 
     var categoriesChildren = <Widget>[
@@ -432,7 +361,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
     ];
     Widget productsListingView = Container(height: listingHeight, child: GridView.count(crossAxisCount: 2, padding: const EdgeInsets.all(8), children: productsChildren));
 
-    return Padding(padding: EdgeInsets.only(left: 24), child: Column(children: [categoriesListingView, Align(alignment: Alignment.centerLeft, child: Text(controller.productCategoryName(_selectedProductCategoryIndex), style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 4, 4, 21),),)), productsListingView]));//Center(child: Stack(children: [categoriesListingView, Text(controller.productCategoryName(_selectedProductCategoryIndex)), productsListingView/*, bottomOverlayView*/]));
+    return Padding(padding: EdgeInsets.only(left: 24), child: Column(children: [categoriesListingView, Align(alignment: Alignment.centerLeft, child: Text(controller.productCategoryName(_selectedProductCategoryIndex), style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 4, 4, 21),),)), productsListingView]));
   }
 
   Widget recipesListingView() {
@@ -474,21 +403,10 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
       controller.getAllProducts();
     }
 
-    var fab = _selectedIndex != 0 ? null : ControlledWidgetBuilder<ProductsListingController>(builder: (context, controller) { return InkWell(onTap: () {
-
-                                        print("DEBUG_SESSION show dialog");
-                                        //controller.deleteOne(product.name);
-                                        DialogUtils.showCustomDialog(context,
+    var newIngredientsButton = _selectedIndex != 0 ? null : ControlledWidgetBuilder<ProductsListingController>(builder: (context, controller) { return InkWell(onTap: () {
+    DialogUtils.showCustomDialog(context,
           title: "New ingredients",
           okBtnText: "Add ingredients",
-          addTagFunction: () {
-            print("DEBUG_SESSION addTagFunction");
-            //setState((){});
-          },
-          removeTagFunction: (String name) {
-            print("DEBUG_SESSION removeTagFunction");
-            //setState((){});
-          },
           okBtnFunction: addProducts,
         );
                                           
@@ -504,7 +422,7 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                                   children: [
                                     IconButton(
                                       icon: ImageIcon(AssetImage(CustomImages.plus), color: Colors.white),
-                                      //onPressed: () {},
+                                      onPressed: () {},
                                     ),
                                     Text("New ingredient", style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white,),),
                                   ],
@@ -516,10 +434,8 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
       )); })  ;
 
     return Scaffold(
-      //floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: fab,
+      floatingActionButton: newIngredientsButton,
       appBar: AppBar(
-        //centerTitle: false,
         title: Text(
           _selectedIndex == 0 ? 'What\'s in my fridge?' : 'Recipes suggestions',
           style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black),
@@ -537,18 +453,15 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
         elevation: 0,
       ),
       body: ControlledWidgetBuilder<ProductsListingController>(builder: (context, controller) {
-        // since a refresh occured we dismiss loader modals
-        //Navigator.maybePop(context, _doOnce == false);
-        print("DEBUG_SESSION UI REFRESH $_isLoaderDisplayed $_refreshSinceLoadCounter");
         if (_isLoaderDisplayed) {
+          // when a loader is being displayed
+          // the first refresh is trigered when we display a loader screen, so we wait for the second refresh to actually dismiss the loader screen
           _refreshSinceLoadCounter += 1;
           if (_refreshSinceLoadCounter == 2) {
             _isLoaderDisplayed = false;
-            //_selectedIndex = 1;
             Navigator.pop(context);
           }
         }
-        //Navigator.of(context).popUntil((route) { print("DEBUG_SESSION " + route.settings.name); return route.settings.name == "/productsListing"; });
         return _selectedIndex == 0 ? productsListingView(controller) : recipesListingView();
       }),
       bottomNavigationBar: BottomNavigationBar(
@@ -564,7 +477,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
         ),
       ],
       onTap: (index) {
-        print("selected index: $index");
         if (index == _selectedIndex) {
           return;
         }
@@ -594,10 +506,8 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
 
             recipesController.getAllRecipes(this.controller.products);
           }
-        //});
       },
   ),
     );
   }
-
 }

@@ -28,9 +28,7 @@ class AddProductUseCase
         if (identifiedProduct == null) {
           controller.add(AddProductUseCaseResponse(false));
         } else {
-          print("DEBUG_SESSION OK3");
           bool isAdded = await productsRepository.add(identifiedProduct);
-          print("DEBUG_SESSION OK3b");
           controller.add(AddProductUseCaseResponse(isAdded));
         }        
       }

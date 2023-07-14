@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import 'package:fridge_cook/src/domain/usecases/completions_request_formatter.dart';
 

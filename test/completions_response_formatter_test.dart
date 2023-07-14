@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/entities/product_category.dart';

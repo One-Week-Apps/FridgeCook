@@ -4,13 +4,12 @@ import 'package:fridge_cook/src/app/pages/products_listing/products_recipes_list
 import 'package:fridge_cook/src/app/widgets/full_screen_image_viewer.dart';
 import 'package:fridge_cook/src/data/repositories/SharedPref.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:fridge_cook/src/app/CustomImages.dart';
 import '../../SharedPreferencesKeys.dart';
 
 class OnboardingRoute extends StatelessWidget {
   static const routeName = '/onboarding';
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   void nextPage() {
     _pageController.animateToPage(

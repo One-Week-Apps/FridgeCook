@@ -3,7 +3,6 @@ import 'package:fridge_cook/src/domain/entities/product_category.dart';
 
 import '../../domain/entities/recipe.dart';
 import '../../domain/repositories/recipes_repository.dart';
-import 'package:flutter/cupertino.dart';
 
 class DataRecipesRepository extends RecipesRepository {
   List<Recipe> recipes;
