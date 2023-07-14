@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:fridge_cook/src/app/CustomImages.dart';
 import 'package:fridge_cook/src/app/SharedPreferencesKeys.dart';
 import 'package:fridge_cook/src/app/pages/loader/loader_view.dart';
 import 'package:fridge_cook/src/data/repositories/SharedPref.dart';
@@ -26,12 +27,6 @@ Future<void> main() async {
 
 const PrimaryColor = const Color.fromARGB(255, 223, 0, 26);
 
-class ColorModel with ChangeNotifier {
-  void updateDisplay() {
-    notifyListeners();
-  }
-}
-
 class MyApp extends StatelessWidget {
   MyApp(this.tutorialCompleted);
   final bool tutorialCompleted;
@@ -43,7 +38,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     
-    var homeRoute = tutorialCompleted ? ProductsListingRoute() : OnboardingRoute();
+    var homeRoute = tutorialCompleted ? ProductsListingRoute() : _makeOnboardingRoute();
 
     return OKToast(
           child: MaterialApp(
@@ -54,7 +49,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'DM Sans'),
         home: homeRoute,
         routes: {
-          OnboardingRoute.routeName: (context) => OnboardingRoute(),
+          OnboardingRoute.routeName: (context) => _makeOnboardingRoute(),
           ProductsListingRoute.routeName: (context) => ProductsListingRoute(),
           LoaderRoute.routeName: (context) {
             final List<String> args = ModalRoute.of(context).settings.arguments;
@@ -71,4 +66,15 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-}
+
+  OnboardingRoute _makeOnboardingRoute() =>
+    OnboardingRoute(
+      "How to use Fridge Cook",
+      [
+        OnboardingStep('Start by adding\n all the ingredients you have\nfor cooking!', CustomImages.onboardingScan),
+        OnboardingStep('Wrong ingredients or quantities?\nAlready cooked?\nReview and modify your ingredients anytime!', CustomImages.onboardingListing),
+        OnboardingStep('Tadam!\nCustom recipes suggestions are \nautomatically generated based on your ingredients!', CustomImages.onboardingRecipesListing),
+        OnboardingStep('Get more details \nby selecting a particular recipe.', CustomImages.onboardingRecipeDetails),
+      ]
+    );
+  }
