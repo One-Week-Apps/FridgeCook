@@ -19,6 +19,7 @@ import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'products_listing_controller.dart';
 
 typedef ListStringVoidFunc = void Function(List<String> list);
+typedef StringVoidFunc = void Function(String value);
 
 class DialogUtils {
   static DialogUtils _instance = new DialogUtils.internal();
@@ -30,7 +31,7 @@ class DialogUtils {
   static final _productController = TextEditingController();
   static List<String> _tags = [];
 
-  static Widget _makeTag(name) {
+  static Widget _makeTag(name, Function removeTagFunction) {
     return Container(decoration: BoxDecoration(
                     color: PrimaryColor.withAlpha(18),
                     border: Border.all(color: Color.fromARGB(18, 223, 0, 26),),
@@ -46,21 +47,20 @@ class DialogUtils {
                                       icon: ImageIcon(AssetImage(CustomImages.close)),//Icon(Icons.close, color: PrimaryColor)),
                                       onPressed: () {
                                         print("DEBUG_SESSION remove tag: " + name);
+                                        removeTagFunction(name);
                                       },
                                     ),
                                   ],
                                 ),
-      );//Text(name);
+      );
   }
-
-  //typedef WidgetBuilder = Widget Function(BuildContext context);
 
   static void showCustomDialog(BuildContext context,
       {@required String title, 
       String okBtnText = "Ok",
       String cancelBtnText = "Cancel",
       @required Function addTagFunction,
-      @required Function removeTagFunction,
+      @required StringVoidFunc removeTagFunction,
       @required ListStringVoidFunc okBtnFunction}) {
 
 var addIngredientsView = TextButton(
@@ -108,12 +108,15 @@ var addIngredientsView = TextButton(
         _productController.text = "";
         setState((){});
         addTagFunction();
-        //controller.addProduct(value);
       }, decoration: const InputDecoration(
               border: UnderlineInputBorder(),
               labelText: 'Enter ingredients...',
     )),
-                Wrap(spacing: 8, runSpacing: 8, children: [for (var tag in _tags) _makeTag(tag),],),
+                Wrap(spacing: 8, runSpacing: 8, children: [for (var tag in _tags) _makeTag(tag, (String value) {
+            _tags.remove(value);
+             setState((){});
+             removeTagFunction(value);     
+            }),],),
               ]);
             })
             
@@ -184,7 +187,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
               children: <Widget>[
 
                 Column(crossAxisAlignment: CrossAxisAlignment.start , children: [
-                  //Row(children: [
                   Text('\n' + recipe.name,
                   textAlign: TextAlign.left,
                     style: GoogleFonts.dmSans(
@@ -193,10 +195,6 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
                         fontWeight: FontWeight.bold)),
                         SizedBox(height: 10,),
                         ProductsDetailsState.makeRecipeSpecifications(),
-                        //]),
-
-                  // ingredients ...
-
                 ],),
 
                 
@@ -485,11 +483,12 @@ class _ProductsListingRouteState extends ViewState<ProductsListingRoute, Product
           okBtnText: "Add ingredients",
           addTagFunction: () {
             print("DEBUG_SESSION addTagFunction");
-            setState((){
-              //refreshCount += 1;
-            });
+            //setState((){});
           },
-          removeTagFunction: () => setState((){}),
+          removeTagFunction: (String name) {
+            print("DEBUG_SESSION removeTagFunction");
+            //setState((){});
+          },
           okBtnFunction: addProducts,
         );
                                           
