@@ -5,10 +5,10 @@ import 'package:fridge_cook/src/domain/usecases/get_all_categories_usecase.dart'
 import 'package:fridge_cook/src/domain/usecases/get_all_products_usecase.dart';
 
 class ProductsListingPresenter extends Presenter {
-  Function getAllCategoriesOnNext;
-  Function getAllProductsOnNext;
-  Function addProductOnNext;
-  Function deleteProductOnNext;
+  late Function getAllCategoriesOnNext;
+  late Function getAllProductsOnNext;
+  late Function addProductOnNext;
+  late Function deleteProductOnNext;
 
   final GetAllCategoriesUseCase getAllCategoriesUseCase;
   final GetAllProductsUseCase getAllProductsUseCase;
@@ -64,7 +64,9 @@ class _GetAllCategoriesUseCaseObserver extends Observer<GetAllCategoriesUseCaseR
 
   @override
   void onNext(response) {
-    presenter.getAllCategoriesOnNext(response.categories);
+    if (response != null) {
+      presenter.getAllCategoriesOnNext(response.categories);
+    }
   }
 }
 
@@ -81,7 +83,9 @@ class _GetAllProductsUseCaseObserver extends Observer<GetAllProductsUseCaseRespo
 
   @override
   void onNext(response) {
-    presenter.getAllProductsOnNext(response.products);
+    if (response != null) {
+      presenter.getAllProductsOnNext(response.products);
+    }
   }
 }
 
@@ -98,7 +102,9 @@ class _AddProductUseCaseObserver extends Observer<AddProductUseCaseResponse> {
 
   @override
   void onNext(response) {
-    presenter.addProductOnNext(response.isAdded);
+    if (response != null) {
+      presenter.addProductOnNext(response.isAdded);
+    }
   }
 }
 
@@ -115,6 +121,8 @@ class _DeleteProductUseCaseObserver extends Observer<DeleteProductUseCaseRespons
 
   @override
   void onNext(response) {
-    presenter.deleteProductOnNext(response.isDeleted);
+    if (response != null) {
+      presenter.deleteProductOnNext(response.isDeleted);
+    }
   }
 }

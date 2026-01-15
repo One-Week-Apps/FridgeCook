@@ -27,9 +27,9 @@ class GenerationsResponse {
   final String imageUrl;
 
   const GenerationsResponse({
-    this.created,
-    this.data,
-    this.imageUrl,
+    required this.created,
+    required this.data,
+    required this.imageUrl,
   });
 
   factory GenerationsResponse.fromResponse(Response response) {
@@ -39,6 +39,7 @@ class GenerationsResponse {
 
     return GenerationsResponse(
       created: responseBody['created'],
+      data: data,
       imageUrl: imageUrl,
     );
   }

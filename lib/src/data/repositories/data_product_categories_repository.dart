@@ -2,8 +2,8 @@ import 'package:fridge_cook/src/domain/entities/product_category.dart';
 import '../../domain/repositories/product_categories_repository.dart';
 
 class DataProductCategoriesRepository extends ProductCategoriesRepository {
-  List<ProductCategory> categories;
-  static DataProductCategoriesRepository _instance = DataProductCategoriesRepository._internal();
+  late List<ProductCategory> categories;
+  static final DataProductCategoriesRepository _instance = DataProductCategoriesRepository._internal();
   DataProductCategoriesRepository._internal() {
     categories = <ProductCategory>[];
     categories.addAll([

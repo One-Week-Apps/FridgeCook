@@ -9,7 +9,7 @@ class ProductsListingController extends Controller {
   List<ProductCategory> _categories = [];
   List<Product> _products = [];
   List<Product> _filteredProducts = [];
-  ProductCategory _filteredCategory;
+  ProductCategory? _filteredCategory;
   
   // data used by the View
   int get counter => _counter;
@@ -73,8 +73,8 @@ class ProductsListingController extends Controller {
 
     return _categories[index].name;
   }
-  void filter(ProductCategory category) {
-    if (category.toString() == "null") {
+  void filter(ProductCategory? category) {
+    if (category == null) {
       _filteredCategory = null;
       _filteredProducts = _products;
     } else {

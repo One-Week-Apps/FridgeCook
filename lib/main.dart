@@ -52,14 +52,14 @@ class MyApp extends StatelessWidget {
           OnboardingRoute.routeName: (context) => _makeOnboardingRoute(),
           ProductsListingRoute.routeName: (context) => ProductsListingRoute(),
           LoaderRoute.routeName: (context) {
-            final List<String> args = ModalRoute.of(context).settings.arguments;
-            final String title = args.first;
-            final String description = args.last;
+            final args = ModalRoute.of(context)?.settings.arguments as List<String>?;
+            final String title = args?.first ?? '';
+            final String description = args?.last ?? '';
             return LoaderRoute(title, description);
           },
           RecipesDetailsRoute.routeName: (context) {
-            final Recipe recipe = ModalRoute.of(context).settings.arguments;
-            return RecipesDetailsRoute(recipe); 
+            final recipe = ModalRoute.of(context)?.settings.arguments as Recipe?;
+            return recipe != null ? RecipesDetailsRoute(recipe) : ProductsListingRoute();
           },
         },
         debugShowCheckedModeBanner: false,

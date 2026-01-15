@@ -13,7 +13,7 @@ class GetAllProductsUseCase
 
   @override
   Future<Stream<GetAllProductsUseCaseResponse>> buildUseCaseStream(
-      GetAllProductsUseCaseParams params) async {
+      GetAllProductsUseCaseParams? params) async {
     final StreamController<GetAllProductsUseCaseResponse> controller =
         StreamController();
     try {

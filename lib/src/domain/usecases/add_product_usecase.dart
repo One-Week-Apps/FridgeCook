@@ -13,24 +13,28 @@ class AddProductUseCase
 
   @override
   Future<Stream<AddProductUseCaseResponse>> buildUseCaseStream(
-      AddProductUseCaseParams params) async {
+      AddProductUseCaseParams? params) async {
     final StreamController<AddProductUseCaseResponse> controller =
         StreamController();
     try {
-      var existingProduct = await productsRepository.getProduct(params.id);
-
-      if (existingProduct != null) {
-        bool isUpdated = await productsRepository.updateProduct(existingProduct.name, existingProduct.quantity + 1);
-        controller.add(AddProductUseCaseResponse(isUpdated));
+      if (params == null) {
+        controller.add(AddProductUseCaseResponse(false));
       } else {
-        var identifiedProduct = await productFetcher.fetchProduct(params.id);
+        var existingProduct = await productsRepository.getProduct(params.id);
 
-        if (identifiedProduct == null) {
-          controller.add(AddProductUseCaseResponse(false));
+        if (existingProduct != null) {
+          bool isUpdated = await productsRepository.updateProduct(existingProduct.name, existingProduct.quantity + 1);
+          controller.add(AddProductUseCaseResponse(isUpdated));
         } else {
-          bool isAdded = await productsRepository.add(identifiedProduct);
-          controller.add(AddProductUseCaseResponse(isAdded));
-        }        
+          var identifiedProduct = await productFetcher.fetchProduct(params.id);
+
+          if (identifiedProduct == null) {
+            controller.add(AddProductUseCaseResponse(false));
+          } else {
+            bool isAdded = await productsRepository.add(identifiedProduct);
+            controller.add(AddProductUseCaseResponse(isAdded));
+          }
+        }
       }
       controller.close();
     } catch (e) {

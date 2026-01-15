@@ -14,16 +14,16 @@ class GetAllRecipesUseCase
 
   @override
   Future<Stream<GetAllRecipesUseCaseResponse>> buildUseCaseStream(
-      GetAllRecipesUseCaseParams params) async {
+      GetAllRecipesUseCaseParams? params) async {
     final StreamController<GetAllRecipesUseCaseResponse> controller =
         StreamController();
     try {
       // get products
       List<Recipe> recipes = [];
-      if (params.products.isNotEmpty) {
+      if (params != null && params.products.isNotEmpty) {
         recipes = await recipesRepository.getAllRecipes(params.products);
       }
-      
+
       controller.add(GetAllRecipesUseCaseResponse(recipes));
       logger.finest('GetRecipesUseCase successful.');
       controller.close();

@@ -14,7 +14,7 @@ description: A sample Flutter app demonstrating the usage of Clean Architecture 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
 flutter_icons:
     android: "launcher_icon"
@@ -27,22 +27,22 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.8
 
-  flutter_clean_architecture: ^5.0.3
-  flutter_launcher_icons:  ^0.9.0
-  intl: ^0.16.1
+  flutter_clean_architecture: ^6.1.0
+  flutter_launcher_icons: ^0.14.4
+  intl: ^0.20.2
 
   cached_network_image: ^3.2.3
 
-  lottie: ^2.1.0
+  lottie: ^3.3.2
 
-  google_fonts: ^2.1.0
+  google_fonts: ^7.0.2
 
   shared_preferences: ^2.0.15
 
-  html: ^0.14.0+3
-  http: ^0.13.0
+  html: ^0.15.6
+  http: ^1.6.0
 
   oktoast: ^3.3.1
 

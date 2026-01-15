@@ -104,7 +104,7 @@ class SharedPreferencesProductRepository extends ProductsRepository {
   }
   
   @override
-  Future<Product> getProduct(String id) async {
+  Future<Product?> getProduct(String id) async {
     int productCount = await getProductsCount();
     if (productCount == 0) {
       return null;
@@ -130,7 +130,7 @@ class SharedPreferencesProductRepository extends ProductsRepository {
   Future<bool> updateProduct(String id, int newQuantity) async {
     int productCount = await getProductsCount();
     if (productCount == 0) {
-      return null;
+      return false;
     }
 
     for (var i = 1 ; i < (productCount + 1) ; i++) {
@@ -148,7 +148,7 @@ class SharedPreferencesProductRepository extends ProductsRepository {
       }
     }
 
-    return null;
+    return false;
   }
 
 }

@@ -139,8 +139,9 @@ class OnboardingRoute extends StatelessWidget {
   }
 
   void _nextPage() {
+    final currentPage = (_pageController.page ?? 0).toInt();
     _pageController.animateToPage(
-      _pageController.page.toInt() + 1,
+      currentPage + 1,
       duration: Duration(milliseconds: 400),
       curve: Curves.easeIn
     );

@@ -3,7 +3,7 @@ import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/usecases/get_all_recipes_usecase.dart';
 
 class RecipesListingPresenter extends Presenter {
-  Function getAllRecipesOnNext;
+  late Function getAllRecipesOnNext;
 
   final GetAllRecipesUseCase getAllRecipesUseCase;
 
@@ -36,6 +36,8 @@ class _GetAllRecipesUseCaseObserver extends Observer<GetAllRecipesUseCaseRespons
 
   @override
   void onNext(response) {
-    presenter.getAllRecipesOnNext(response.recipes);
+    if (response != null) {
+      presenter.getAllRecipesOnNext(response.recipes);
+    }
   }
 }

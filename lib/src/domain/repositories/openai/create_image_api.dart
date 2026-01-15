@@ -12,14 +12,14 @@ class GenerationsApi {
   static Future<String> getForecast(String prompt) async {
     final prefs = await SharedPreferences.getInstance();
 
-    String stored = prefs.getString(prompt);
+    String? stored = prefs.getString(prompt);
 
     if (stored != null) {
       return stored.trim();
     }
     else {
       GenerationsResponse newForecast = await getNewGeneration(prompt);
-      return newForecast.imageUrl?.trim();
+      return newForecast.imageUrl.trim();
     }
   }
 

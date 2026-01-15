@@ -42,17 +42,17 @@ class CompletionsResponse {
   final List<String> completions;
 
   const CompletionsResponse({
-    this.id,
-    this.object,
-    this.created,
-    this.model,
-    this.choices,
-    this.usage,
-    this.promptTokens,
-    this.completionTokens,
-    this.totalTokens,
-    this.firstCompletion,
-    this.completions,
+    required this.id,
+    required this.object,
+    required this.created,
+    required this.model,
+    required this.choices,
+    required this.usage,
+    required this.promptTokens,
+    required this.completionTokens,
+    required this.totalTokens,
+    required this.firstCompletion,
+    required this.completions,
   });
 
   /// Returns a [CompletionResponse] from the JSON obtained from the

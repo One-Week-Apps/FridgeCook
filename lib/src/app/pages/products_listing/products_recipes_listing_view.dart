@@ -55,10 +55,10 @@ class DialogUtils {
   }
 
   static void showCustomDialog(BuildContext context,
-      {@required String title, 
+      {required String title,
       String okBtnText = "Ok",
       String cancelBtnText = "Cancel",
-      @required ListStringVoidFunc okBtnFunction}) {
+      required ListStringVoidFunc okBtnFunction}) {
 
 var addIngredientsView = TextButton(
                   style: TextButton.styleFrom(
@@ -126,9 +126,9 @@ var addIngredientsView = TextButton(
   }
  }
 
-class ProductsListingRoute extends View {
+class ProductsListingRoute extends CleanView {
   static const routeName = '/productsListing';
-  ProductsListingRoute({Key key, this.title}) : super(key: key);
+  const ProductsListingRoute({Key? key, this.title = ''}) : super(key: key);
 
   final String title;
 
@@ -139,17 +139,20 @@ class ProductsListingRoute extends View {
     productsListingController,
     RecipesListingController(RemoteRecipesRepository(), productsListingController)
     );
-  } 
+  }
 }
 
-class _ProductsListingRouteState extends ViewState<ProductsListingRoute, ProductsListingController>
+class _ProductsListingRouteState extends CleanViewState<ProductsListingRoute, ProductsListingController>
     with SingleTickerProviderStateMixin {
 
-      ProductsListingController controller;
-      RecipesListingController recipesController;
+      late ProductsListingController controller;
+      late RecipesListingController recipesController;
 
     _ProductsListingRouteState(ProductsListingController controller, RecipesListingController recipesController)
-      : this.controller = controller, this.recipesController = recipesController, super(controller);
+      : super(controller) {
+        this.controller = controller;
+        this.recipesController = recipesController;
+      }
 
   Widget _recipeTableViewCell(int index, Recipe item) {
     var recipe = item;

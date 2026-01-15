@@ -31,15 +31,15 @@ class CompletionsRequest {
   final String stop;
 
   CompletionsRequest({
-    this.model,
-    this.prompt,
-    this.maxTokens,
-    this.temperature,
-    this.topP,
-    this.n,
-    this.stream,
-    this.longprobs,
-    this.stop,
+    required this.model,
+    required this.prompt,
+    required this.maxTokens,
+    required this.temperature,
+    required this.topP,
+    required this.n,
+    required this.stream,
+    required this.longprobs,
+    required this.stop,
   });
 
   String toJson() {

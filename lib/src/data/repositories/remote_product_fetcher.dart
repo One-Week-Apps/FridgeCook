@@ -8,7 +8,7 @@ class RemoteProductFetcher extends ProductFetcher {
   RemoteProductFetcher();
 
   @override
-  Future<Product> fetchProduct(String id) async {
+  Future<Product?> fetchProduct(String id) async {
     bool isIngredient = await CompletionsApi.isIngredient(id);
 
     if (isIngredient == false) {

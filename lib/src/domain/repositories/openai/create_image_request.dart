@@ -19,9 +19,9 @@ class GenerationsRequest {
   final String size;
 
   GenerationsRequest({
-    this.prompt,
-    this.n,
-    this.size,
+    required this.prompt,
+    required this.n,
+    required this.size,
   });
 
   String toJson() {
