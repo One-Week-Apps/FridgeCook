@@ -23,8 +23,18 @@ class AddProductUseCase
         var existingProduct = await productsRepository.getProduct(params.id);
 
         if (existingProduct != null) {
-          bool isUpdated = await productsRepository.updateProduct(existingProduct.name, existingProduct.quantity + 1);
-          controller.add(AddProductUseCaseResponse(isUpdated));
+          // Check if we can increment the quantity (Tell Don't Ask principle)
+          if (!existingProduct.canIncrementQuantity) {
+            // Cannot increment beyond maximum (9)
+            controller.add(AddProductUseCaseResponse(false));
+          } else {
+            final newQuantity = existingProduct.quantity.increment();
+            bool isUpdated = await productsRepository.updateProduct(
+              existingProduct.name,
+              newQuantity,
+            );
+            controller.add(AddProductUseCaseResponse(isUpdated));
+          }
         } else {
           var identifiedProduct = await productFetcher.fetchProduct(params.id);
 

@@ -4,6 +4,7 @@ import 'package:fridge_cook/src/data/repositories/in_memory_product_fetcher.dart
 import 'package:fridge_cook/src/data/repositories/in_memory_products_repository.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/entities/product_category.dart';
+import 'package:fridge_cook/src/domain/entities/product_quantity.dart';
 import 'package:fridge_cook/src/domain/usecases/add_product_usecase.dart';
 
 void main() {
@@ -20,16 +21,16 @@ void main() {
       () async {
     AddProductUseCase getUserUseCase;
     _Observer observer;
-    var repo = InMemoryProductsRepository([Product("banana", 1, ProductCategory.fruits, "")]);
+    var repo = InMemoryProductsRepository([Product("banana", ProductQuantity(1), ProductCategory.fruits, "")]);
     var fetcher = InMemoryProductFetcher(null);
     getUserUseCase = AddProductUseCase(repo, fetcher);
     observer = _Observer();
     getUserUseCase.execute(observer, AddProductUseCaseParams('banana'));
-    while (!observer.status['progress'].contains('done')) {
+    while (!observer.status['progress']!.contains('done')) {
       await Future.delayed(const Duration(seconds: 1));
     }
     expect(observer.status['result'], 'success');
-    expect(repo.products.first.quantity, 2);
+    expect(repo.products.first.quantity.value, 2);
   });
 
   test(
@@ -42,7 +43,7 @@ void main() {
     getUserUseCase = AddProductUseCase(repo, fetcher);
     observer = _Observer();
     getUserUseCase.execute(observer, AddProductUseCaseParams('banana'));
-    while (!observer.status['progress'].contains('done')) {
+    while (!observer.status['progress']!.contains('done')) {
       await Future.delayed(const Duration(seconds: 1));
     }
     expect(observer.status['result'], 'unrecognized');
@@ -55,15 +56,15 @@ void main() {
     AddProductUseCase getUserUseCase;
     _Observer observer;
     var repo = InMemoryProductsRepository([]);
-    var fetcher = InMemoryProductFetcher(Product("banana", 1, ProductCategory.fruits, "test_image_url"));
+    var fetcher = InMemoryProductFetcher(Product("banana", ProductQuantity(1), ProductCategory.fruits, "test_image_url"));
     getUserUseCase = AddProductUseCase(repo, fetcher);
     observer = _Observer();
     getUserUseCase.execute(observer, AddProductUseCaseParams('banana'));
-    while (!observer.status['progress'].contains('done')) {
+    while (!observer.status['progress']!.contains('done')) {
       await Future.delayed(const Duration(seconds: 1));
     }
     expect(observer.status['result'], 'success');
-    expect(repo.products.first.quantity, 1);
+    expect(repo.products.first.quantity.value, 1);
     expect(repo.products.first.image, "test_image_url");
   });
 }
@@ -71,17 +72,17 @@ void main() {
 class _Observer implements Observer<AddProductUseCaseResponse> {
   final status = {'progress': 'starting', 'result': ''};
   @override
-  void onNext(response) {
+  void onNext(AddProductUseCaseResponse? response) {
     expect(AddProductUseCaseResponse, response.runtimeType);
     status['progress'] = 'done';
-    status['result'] = response.isAdded ? 'success' : 'unrecognized';
+    status['result'] = response!.isAdded ? 'success' : 'unrecognized';
   }
 
   @override
   void onComplete() {}
 
   @override
-  void onError(e) {
+  void onError(dynamic e) {
     status['progress'] = 'done';
     status['result'] = 'failed';
   }

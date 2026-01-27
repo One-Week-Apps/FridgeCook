@@ -89,8 +89,8 @@ class ProductsListingController extends Controller {
     filter(null);
   }
   void addProduct(String value) => presenter.addProduct(value);
-  bool canAddMore(Product product) => product.quantity < 9;
-  bool canRemoveMore(Product product) => product.quantity > 1;
+  bool canAddMore(Product product) => product.canIncrementQuantity;
+  bool canRemoveMore(Product product) => product.canDecrementQuantity;
   void deleteProduct(String value) => presenter.deleteProduct(value);
   void deleteOne(String value) => presenter.deleteOne(value);
 

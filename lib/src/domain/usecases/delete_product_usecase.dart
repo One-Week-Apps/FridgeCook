@@ -22,9 +22,12 @@ class DeleteProductUseCase
         } else {
           var existingProduct = await productsRepository.getProduct(params.product);
 
-          if (existingProduct != null && existingProduct.quantity > 1) {
-            isDeleted = await productsRepository.updateProduct(params.product, existingProduct.quantity - 1);
+          if (existingProduct != null && existingProduct.canDecrementQuantity) {
+            // Use Tell Don't Ask - let ProductQuantity handle the decrement
+            final newQuantity = existingProduct.quantity.decrement();
+            isDeleted = await productsRepository.updateProduct(params.product, newQuantity);
           } else if (existingProduct != null) {
+            // Quantity is 1, so delete the product entirely
             isDeleted = await productsRepository.delete(params.product);
           }
         }

@@ -1,16 +1,17 @@
 import 'package:fridge_cook/src/domain/entities/product_category.dart';
+import 'package:fridge_cook/src/domain/entities/product_quantity.dart';
 
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/products_repository.dart';
 
 class DataProductsRepository extends ProductsRepository {
-  List<Product> products;
-  static DataProductsRepository _instance = DataProductsRepository._internal();
+  late List<Product> products;
+  static final DataProductsRepository _instance = DataProductsRepository._internal();
   DataProductsRepository._internal() {
     products = <Product>[];
     products.addAll([
-      Product("Apple", 1, ProductCategory.fruits, "https://media.istockphoto.com/id/184276818/fr/photo/pomme-rouge.jpg?s=612x612&w=0&k=20&c=yk9viCWt8_VHAvSvzPuqZI-A79xkestBMyCf1AEyhrc="),
-      Product("Orange", 1, ProductCategory.fruits, "https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg"),
+      Product("Apple", ProductQuantity(1), ProductCategory.fruits, "https://media.istockphoto.com/id/184276818/fr/photo/pomme-rouge.jpg?s=612x612&w=0&k=20&c=yk9viCWt8_VHAvSvzPuqZI-A79xkestBMyCf1AEyhrc="),
+      Product("Orange", ProductQuantity(1), ProductCategory.fruits, "https://st.depositphotos.com/1000141/1941/i/600/depositphotos_19418467-stock-photo-ripe-orange-with-leaf.jpg"),
     ]);
   }
   factory DataProductsRepository() => _instance;
@@ -19,61 +20,50 @@ class DataProductsRepository extends ProductsRepository {
   Future<List<Product>> getAllProducts() async {
     return products;
   }
-  
+
   @override
   Future<bool> add(Product product) async {
-    
-    Product existingProduct;
-
     try {
-      existingProduct = products.firstWhere((element) => element.name == product.name);
+      products.firstWhere((element) => element.name == product.name);
+      return false; // Product already exists
     } catch (e) {
-      existingProduct = null;
+      products.add(product);
+      return true;
     }
-
-    if(existingProduct != null) {
-      return false;
-    }
-
-    products.add(product);
-    return true;
   }
 
+  @override
   Future<bool> delete(String id) async {
-    
-    Product existingProduct;
-
     try {
-      existingProduct = products.firstWhere((element) => element.name == id);
+      products.firstWhere((element) => element.name == id);
+      products.removeWhere((item) => item.name == id);
+      return true;
     } catch (e) {
-      existingProduct = null;
-    }
-
-    if(existingProduct == null) {
       return false;
     }
-
-    products.removeWhere((item) => item.name == id);
-    return true;
   }
-  
-  @override
-  Future<Product> getProduct(String id) async {
-    Product existingProduct;
 
+  @override
+  Future<Product?> getProduct(String id) async {
     try {
-      existingProduct = products.firstWhere((element) => element.name == id);
+      return products.firstWhere((element) => element.name == id);
     } catch (e) {
-      existingProduct = null;
+      return null;
     }
-
-    return existingProduct;
   }
 
   @override
-  Future<bool> updateProduct(String id, int newQuantity) async {
+  Future<bool> updateProduct(String id, ProductQuantity newQuantity) async {
     int index = products.indexWhere((element) => element.name == id);
-    products[index] = Product(products[index].name, newQuantity, products[index].category, products[index].image);
+    if (index == -1) {
+      return false;
+    }
+    products[index] = Product(
+      products[index].name,
+      newQuantity,
+      products[index].category,
+      products[index].image,
+    );
     return true;
   }
 }

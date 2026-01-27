@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_cook/src/domain/entities/product.dart';
 import 'package:fridge_cook/src/domain/entities/product_category.dart';
+import 'package:fridge_cook/src/domain/entities/product_quantity.dart';
 import 'package:fridge_cook/src/domain/usecases/completions_response_formatter.dart';
 
 void main() {
@@ -31,7 +32,7 @@ void main() {
     final products = [
       Product(
         "Apple",
-        1,
+        ProductQuantity(1),
         ProductCategory.fruits,
         "https://media.istockphoto.com/id/184276818/fr/photo/pomme-rouge.jpg?s=612x612&w=0&k=20&c=yk9viCWt8_VHAvSvzPuqZI-A79xkestBMyCf1AEyhrc="
       ),
